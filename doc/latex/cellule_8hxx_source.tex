@@ -1,0 +1,50 @@
+\doxysection{cellule.\+hxx}
+\hypertarget{cellule_8hxx_source}{}\label{cellule_8hxx_source}\index{/home/julian/Documentos/ENSI/C++/TP8/cppma-\/spring2023-\/lab5-\/infra-\/test/Project\_Infra\_Test/include/cellule.hxx@{/home/julian/Documentos/ENSI/C++/TP8/cppma-\/spring2023-\/lab5-\/infra-\/test/Project\_Infra\_Test/include/cellule.hxx}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}collections.hxx"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}particule.hxx"{}}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00010\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_cellule}{Cellule}}\{}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ std::vector<Particule*>\ particules;\ }
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ std::vector<Cellule*>\ voisines;\ }
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_vecteur}{Vecteur}}\ indices;\ }
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ bord;\ }
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Constructeur\ */}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_cellule_a9ca08caa8c0665098fb620d4d5796ce2}{Cellule}}();}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Méthodes\ publiques\ */}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_cellule_ac0df6a69d19d6872b81a7471fa17dd1a}{comparerIndices}}(\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y,\ \textcolor{keywordtype}{int}\ z);}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_cellule_a3afc0a722e0b808022f8cdab89e2b1b3}{ajouterParticule}}(\mbox{\hyperlink{class_particule}{Particule}}*\ particule);}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_cellule_a01186469ffa2ea91dbed6bcf572d7e40}{ajouterVoisine}}(\mbox{\hyperlink{class_cellule}{Cellule}}*\ voisine);}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Getters\ */}}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ std::vector<Particule*>\&\ \mbox{\hyperlink{class_cellule_abc101d8ce0cec21e6204289e13757deb}{getParticules}}();}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ std::vector<Cellule*>\&\ \mbox{\hyperlink{class_cellule_ac231abb12c254fca052120866dde49a5}{getVoisines}}();}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_vecteur}{Vecteur}}\ \mbox{\hyperlink{class_cellule_afaaf75f42affebdd34015c735b5cde7c}{getIndices}}();}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_cellule_ac899aa52f96104252b79ebc94ab8d943}{isBord}}();}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Setters\ */}}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_cellule_aa19363796ba0921ea1e7c32a1361782e}{setIndices}}(\textcolor{keywordtype}{int}\ newX,\ \textcolor{keywordtype}{int}\ newY,\ \textcolor{keywordtype}{int}\ newZ);}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_cellule_ae835005d74dbf0014bbd328673df746c}{setBord}}(\textcolor{keywordtype}{bool}\ newBord);}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00104\ \};}
+
+\end{DoxyCode}

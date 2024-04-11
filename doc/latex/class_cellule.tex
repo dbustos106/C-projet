@@ -1,0 +1,185 @@
+\doxysection{Cellule Class Reference}
+\hypertarget{class_cellule}{}\label{class_cellule}\index{Cellule@{Cellule}}
+
+
+Classe représentant une cellule de l\textquotesingle{}univers de particules.  
+
+
+
+
+{\ttfamily \#include $<$cellule.\+hxx$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_cellule_a9ca08caa8c0665098fb620d4d5796ce2}\label{class_cellule_a9ca08caa8c0665098fb620d4d5796ce2} 
+{\bfseries Cellule} ()
+\begin{DoxyCompactList}\small\item\em Constructeur par défaut de la classe \doxylink{class_cellule}{Cellule}. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_cellule_ac0df6a69d19d6872b81a7471fa17dd1a}{comparer\+Indices}} (int x, int y, int z)
+\begin{DoxyCompactList}\small\item\em Fonction qui compare les indices de la cellule avec ceux fournis. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_cellule_a3afc0a722e0b808022f8cdab89e2b1b3}{ajouter\+Particule}} (\mbox{\hyperlink{class_particule}{Particule}} \texorpdfstring{$\ast$}{*}particule)
+\begin{DoxyCompactList}\small\item\em Fonction qui ajoute une particule à la cellule. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_cellule_a01186469ffa2ea91dbed6bcf572d7e40}{ajouter\+Voisine}} (\mbox{\hyperlink{class_cellule}{Cellule}} \texorpdfstring{$\ast$}{*}voisine)
+\begin{DoxyCompactList}\small\item\em Fonction qui ajoute une cellule voisine. \end{DoxyCompactList}\item 
+std\+::vector$<$ \mbox{\hyperlink{class_particule}{Particule}} \texorpdfstring{$\ast$}{*} $>$ \& \mbox{\hyperlink{class_cellule_abc101d8ce0cec21e6204289e13757deb}{get\+Particules}} ()
+\begin{DoxyCompactList}\small\item\em Fonction qui obtient les particules contenues dans la cellule. \end{DoxyCompactList}\item 
+std\+::vector$<$ \mbox{\hyperlink{class_cellule}{Cellule}} \texorpdfstring{$\ast$}{*} $>$ \& \mbox{\hyperlink{class_cellule_ac231abb12c254fca052120866dde49a5}{get\+Voisines}} ()
+\begin{DoxyCompactList}\small\item\em Fonction qui obtient les cellules voisines. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_vecteur}{Vecteur}} \mbox{\hyperlink{class_cellule_afaaf75f42affebdd34015c735b5cde7c}{get\+Indices}} ()
+\begin{DoxyCompactList}\small\item\em Fonction qui obtient les indices de la cellule. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_cellule_ac899aa52f96104252b79ebc94ab8d943}{is\+Bord}} ()
+\begin{DoxyCompactList}\small\item\em Fonction qui vérifie si la cellule est sur le bord du système. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_cellule_aa19363796ba0921ea1e7c32a1361782e}{set\+Indices}} (int newX, int newY, int newZ)
+\begin{DoxyCompactList}\small\item\em Fonction qui définit les indices de la cellule. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_cellule_ae835005d74dbf0014bbd328673df746c}{set\+Bord}} (bool new\+Bord)
+\begin{DoxyCompactList}\small\item\em Fonction qui définit si la cellule est sur le bord du système. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Classe représentant une cellule de l\textquotesingle{}univers de particules. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_cellule_a3afc0a722e0b808022f8cdab89e2b1b3}\label{class_cellule_a3afc0a722e0b808022f8cdab89e2b1b3} 
+\index{Cellule@{Cellule}!ajouterParticule@{ajouterParticule}}
+\index{ajouterParticule@{ajouterParticule}!Cellule@{Cellule}}
+\doxysubsubsection{\texorpdfstring{ajouterParticule()}{ajouterParticule()}}
+{\footnotesize\ttfamily void Cellule\+::ajouter\+Particule (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_particule}{Particule}} \texorpdfstring{$\ast$}{*}}]{particule }\end{DoxyParamCaption})}
+
+
+
+Fonction qui ajoute une particule à la cellule. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em particule} & est le pointeur vers la particule à ajouter. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_cellule_a01186469ffa2ea91dbed6bcf572d7e40}\label{class_cellule_a01186469ffa2ea91dbed6bcf572d7e40} 
+\index{Cellule@{Cellule}!ajouterVoisine@{ajouterVoisine}}
+\index{ajouterVoisine@{ajouterVoisine}!Cellule@{Cellule}}
+\doxysubsubsection{\texorpdfstring{ajouterVoisine()}{ajouterVoisine()}}
+{\footnotesize\ttfamily void Cellule\+::ajouter\+Voisine (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_cellule}{Cellule}} \texorpdfstring{$\ast$}{*}}]{voisine }\end{DoxyParamCaption})}
+
+
+
+Fonction qui ajoute une cellule voisine. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em voisine} & est le pointeur vers la cellule voisine à ajouter. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_cellule_ac0df6a69d19d6872b81a7471fa17dd1a}\label{class_cellule_ac0df6a69d19d6872b81a7471fa17dd1a} 
+\index{Cellule@{Cellule}!comparerIndices@{comparerIndices}}
+\index{comparerIndices@{comparerIndices}!Cellule@{Cellule}}
+\doxysubsubsection{\texorpdfstring{comparerIndices()}{comparerIndices()}}
+{\footnotesize\ttfamily bool Cellule\+::comparer\+Indices (\begin{DoxyParamCaption}\item[{int}]{x,  }\item[{int}]{y,  }\item[{int}]{z }\end{DoxyParamCaption})}
+
+
+
+Fonction qui compare les indices de la cellule avec ceux fournis. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & est la valeur X à comparer. \\
+\hline
+{\em y} & est la valeur Y à comparer. \\
+\hline
+{\em z} & est la valeur Z à comparer. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True si les indices correspondent, False sinon. 
+\end{DoxyReturn}
+\Hypertarget{class_cellule_afaaf75f42affebdd34015c735b5cde7c}\label{class_cellule_afaaf75f42affebdd34015c735b5cde7c} 
+\index{Cellule@{Cellule}!getIndices@{getIndices}}
+\index{getIndices@{getIndices}!Cellule@{Cellule}}
+\doxysubsubsection{\texorpdfstring{getIndices()}{getIndices()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_vecteur}{Vecteur}} Cellule\+::get\+Indices (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Fonction qui obtient les indices de la cellule. 
+
+\begin{DoxyReturn}{Returns}
+\doxylink{class_vecteur}{Vecteur} contenant les indices de la cellule. 
+\end{DoxyReturn}
+\Hypertarget{class_cellule_abc101d8ce0cec21e6204289e13757deb}\label{class_cellule_abc101d8ce0cec21e6204289e13757deb} 
+\index{Cellule@{Cellule}!getParticules@{getParticules}}
+\index{getParticules@{getParticules}!Cellule@{Cellule}}
+\doxysubsubsection{\texorpdfstring{getParticules()}{getParticules()}}
+{\footnotesize\ttfamily std\+::vector$<$ \mbox{\hyperlink{class_particule}{Particule}} \texorpdfstring{$\ast$}{*} $>$ \& Cellule\+::get\+Particules (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Fonction qui obtient les particules contenues dans la cellule. 
+
+\begin{DoxyReturn}{Returns}
+\doxylink{class_vecteur}{Vecteur} de pointeurs vers les particules contenues. 
+\end{DoxyReturn}
+\Hypertarget{class_cellule_ac231abb12c254fca052120866dde49a5}\label{class_cellule_ac231abb12c254fca052120866dde49a5} 
+\index{Cellule@{Cellule}!getVoisines@{getVoisines}}
+\index{getVoisines@{getVoisines}!Cellule@{Cellule}}
+\doxysubsubsection{\texorpdfstring{getVoisines()}{getVoisines()}}
+{\footnotesize\ttfamily std\+::vector$<$ \mbox{\hyperlink{class_cellule}{Cellule}} \texorpdfstring{$\ast$}{*} $>$ \& Cellule\+::get\+Voisines (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Fonction qui obtient les cellules voisines. 
+
+\begin{DoxyReturn}{Returns}
+\doxylink{class_vecteur}{Vecteur} de pointeurs vers les cellules voisines. 
+\end{DoxyReturn}
+\Hypertarget{class_cellule_ac899aa52f96104252b79ebc94ab8d943}\label{class_cellule_ac899aa52f96104252b79ebc94ab8d943} 
+\index{Cellule@{Cellule}!isBord@{isBord}}
+\index{isBord@{isBord}!Cellule@{Cellule}}
+\doxysubsubsection{\texorpdfstring{isBord()}{isBord()}}
+{\footnotesize\ttfamily bool Cellule\+::is\+Bord (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Fonction qui vérifie si la cellule est sur le bord du système. 
+
+\begin{DoxyReturn}{Returns}
+True si la cellule est sur le bord, False sinon. 
+\end{DoxyReturn}
+\Hypertarget{class_cellule_ae835005d74dbf0014bbd328673df746c}\label{class_cellule_ae835005d74dbf0014bbd328673df746c} 
+\index{Cellule@{Cellule}!setBord@{setBord}}
+\index{setBord@{setBord}!Cellule@{Cellule}}
+\doxysubsubsection{\texorpdfstring{setBord()}{setBord()}}
+{\footnotesize\ttfamily void Cellule\+::set\+Bord (\begin{DoxyParamCaption}\item[{bool}]{new\+Bord }\end{DoxyParamCaption})}
+
+
+
+Fonction qui définit si la cellule est sur le bord du système. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+Bord} & est un booléen indiquant si la cellule est sur le bord. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_cellule_aa19363796ba0921ea1e7c32a1361782e}\label{class_cellule_aa19363796ba0921ea1e7c32a1361782e} 
+\index{Cellule@{Cellule}!setIndices@{setIndices}}
+\index{setIndices@{setIndices}!Cellule@{Cellule}}
+\doxysubsubsection{\texorpdfstring{setIndices()}{setIndices()}}
+{\footnotesize\ttfamily void Cellule\+::set\+Indices (\begin{DoxyParamCaption}\item[{int}]{newX,  }\item[{int}]{newY,  }\item[{int}]{newZ }\end{DoxyParamCaption})}
+
+
+
+Fonction qui définit les indices de la cellule. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em newX} & est la nouvelle valeur pour la coordonnée X. \\
+\hline
+{\em newY} & est la nouvelle valeur pour la coordonnée Y. \\
+\hline
+{\em newZ} & est la nouvelle valeur pour la coordonnée Z. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/julian/\+Documentos/\+ENSI/\+C++/\+TP8/cppma-\/spring2023-\/lab5-\/infra-\/test/\+Project\+\_\+\+Infra\+\_\+\+Test/include/cellule.\+hxx\item 
+/home/julian/\+Documentos/\+ENSI/\+C++/\+TP8/cppma-\/spring2023-\/lab5-\/infra-\/test/\+Project\+\_\+\+Infra\+\_\+\+Test/src/structures/cellule.\+cxx\end{DoxyCompactItemize}

@@ -1,0 +1,173 @@
+\doxysection{Options Struct Reference}
+\hypertarget{struct_options}{}\label{struct_options}\index{Options@{Options}}
+
+
+Structure définissant les options par défaut du programme.  
+
+
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{struct_options_a11ff7e822575781f10e4256db9232f12}{help}} = false
+\item 
+bool \mbox{\hyperlink{struct_options_a8a7a031fc298e72957c18999b77b0b83}{version}} = false
+\item 
+bool \mbox{\hyperlink{struct_options_a58d28d0742d0b1a6b657f0b698450074}{force\+LJ}} = false
+\item 
+bool \mbox{\hyperlink{struct_options_a28955dc552f589e827b18acef4860413}{force\+IG}} = false
+\item 
+bool \mbox{\hyperlink{struct_options_afc0efa5d94f8bc38b17c6d65761812ac}{force\+PG}} = false
+\item 
+bool \mbox{\hyperlink{struct_options_a1e335096cc42e21dc17257ab53b2b992}{limiter\+Vitesse}} = false
+\item 
+int \mbox{\hyperlink{struct_options_a62de0e4b7f165fa103a71c83fcbe4ae2}{condition\+Limite}} = 2
+\item 
+double \mbox{\hyperlink{struct_options_a311affdba82819eb67e5194b1dfc98d4}{ldX}} = 0
+\item 
+double \mbox{\hyperlink{struct_options_a916bec06c2d2df42b04d111d417829a3}{ldY}} = 0
+\item 
+double \mbox{\hyperlink{struct_options_a38660a2dc961259db8cc081e9edb6e57}{ldZ}} = 0
+\item 
+double \mbox{\hyperlink{struct_options_a4fdd0db5d15bd1d8dbb03c777ba0520a}{r\+Cut}} = 2.\+5
+\item 
+double \mbox{\hyperlink{struct_options_aac084214bc69141549cbb1de139a7cd0}{r\+Cut\+Reflexion}} = pow(2, 1.\+0/6)
+\item 
+double \mbox{\hyperlink{struct_options_aca8df9ef6fbdb3fe4a6f5beed924dddb}{energie\+Desiree}} = 0.\+005
+\item 
+double \mbox{\hyperlink{struct_options_af9a80050c9638a46c3509d0c5f252827}{epsilon}} = 5.\+0
+\item 
+double \mbox{\hyperlink{struct_options_aa22f295a37e7f5e6cad676f0c85ea14b}{sigma}} = 1.\+0
+\item 
+double \mbox{\hyperlink{struct_options_a577f7ee87660ab8c0bfaffe5d0db9590}{G}} = -\/12
+\item 
+double \mbox{\hyperlink{struct_options_acd471c4f31e75e6bdf0e306447ee4c65}{delta}} = 0.\+00005
+\item 
+double \mbox{\hyperlink{struct_options_a02b5170d08ee91c3c9a0add6f9ee07f7}{t\+Final}} = 19.\+5
+\item 
+std\+::string \mbox{\hyperlink{struct_options_ac81fe5e1cb5206bd73ece092a6e8ebf1}{adresse\+Fichier}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Structure définissant les options par défaut du programme. 
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{struct_options_ac81fe5e1cb5206bd73ece092a6e8ebf1}\label{struct_options_ac81fe5e1cb5206bd73ece092a6e8ebf1} 
+\index{Options@{Options}!adresseFichier@{adresseFichier}}
+\index{adresseFichier@{adresseFichier}!Options@{Options}}
+\doxysubsubsection{\texorpdfstring{adresseFichier}{adresseFichier}}
+{\footnotesize\ttfamily std\+::string Options\+::adresse\+Fichier}
+
+Indiquer le nom du fichier de lecture VTU. \Hypertarget{struct_options_a62de0e4b7f165fa103a71c83fcbe4ae2}\label{struct_options_a62de0e4b7f165fa103a71c83fcbe4ae2} 
+\index{Options@{Options}!conditionLimite@{conditionLimite}}
+\index{conditionLimite@{conditionLimite}!Options@{Options}}
+\doxysubsubsection{\texorpdfstring{conditionLimite}{conditionLimite}}
+{\footnotesize\ttfamily int Options\+::condition\+Limite = 2}
+
+Définit le type de condition limite. \Hypertarget{struct_options_acd471c4f31e75e6bdf0e306447ee4c65}\label{struct_options_acd471c4f31e75e6bdf0e306447ee4c65} 
+\index{Options@{Options}!delta@{delta}}
+\index{delta@{delta}!Options@{Options}}
+\doxysubsubsection{\texorpdfstring{delta}{delta}}
+{\footnotesize\ttfamily double Options\+::delta = 0.\+00005}
+
+Définit la valeur de delta. \Hypertarget{struct_options_aca8df9ef6fbdb3fe4a6f5beed924dddb}\label{struct_options_aca8df9ef6fbdb3fe4a6f5beed924dddb} 
+\index{Options@{Options}!energieDesiree@{energieDesiree}}
+\index{energieDesiree@{energieDesiree}!Options@{Options}}
+\doxysubsubsection{\texorpdfstring{energieDesiree}{energieDesiree}}
+{\footnotesize\ttfamily double Options\+::energie\+Desiree = 0.\+005}
+
+Définit l\textquotesingle{}énergie désirée du système. \Hypertarget{struct_options_af9a80050c9638a46c3509d0c5f252827}\label{struct_options_af9a80050c9638a46c3509d0c5f252827} 
+\index{Options@{Options}!epsilon@{epsilon}}
+\index{epsilon@{epsilon}!Options@{Options}}
+\doxysubsubsection{\texorpdfstring{epsilon}{epsilon}}
+{\footnotesize\ttfamily double Options\+::epsilon = 5.\+0}
+
+Définit la valeur d\textquotesingle{}epsilon. \Hypertarget{struct_options_a28955dc552f589e827b18acef4860413}\label{struct_options_a28955dc552f589e827b18acef4860413} 
+\index{Options@{Options}!forceIG@{forceIG}}
+\index{forceIG@{forceIG}!Options@{Options}}
+\doxysubsubsection{\texorpdfstring{forceIG}{forceIG}}
+{\footnotesize\ttfamily bool Options\+::force\+IG = false}
+
+Indique si la force d\textquotesingle{}interaction gravitationnelle doit être utilisée. \Hypertarget{struct_options_a58d28d0742d0b1a6b657f0b698450074}\label{struct_options_a58d28d0742d0b1a6b657f0b698450074} 
+\index{Options@{Options}!forceLJ@{forceLJ}}
+\index{forceLJ@{forceLJ}!Options@{Options}}
+\doxysubsubsection{\texorpdfstring{forceLJ}{forceLJ}}
+{\footnotesize\ttfamily bool Options\+::force\+LJ = false}
+
+Indique si la force du potentiel de Lennard-\/\+Jones doit être utilisée. \Hypertarget{struct_options_afc0efa5d94f8bc38b17c6d65761812ac}\label{struct_options_afc0efa5d94f8bc38b17c6d65761812ac} 
+\index{Options@{Options}!forcePG@{forcePG}}
+\index{forcePG@{forcePG}!Options@{Options}}
+\doxysubsubsection{\texorpdfstring{forcePG}{forcePG}}
+{\footnotesize\ttfamily bool Options\+::force\+PG = false}
+
+Indique si le potentiel gravitationnel doit être utilisé. \Hypertarget{struct_options_a577f7ee87660ab8c0bfaffe5d0db9590}\label{struct_options_a577f7ee87660ab8c0bfaffe5d0db9590} 
+\index{Options@{Options}!G@{G}}
+\index{G@{G}!Options@{Options}}
+\doxysubsubsection{\texorpdfstring{G}{G}}
+{\footnotesize\ttfamily double Options\+::G = -\/12}
+
+Définit la valeur de G pour le calcul du potentiel gravitationnel. \Hypertarget{struct_options_a11ff7e822575781f10e4256db9232f12}\label{struct_options_a11ff7e822575781f10e4256db9232f12} 
+\index{Options@{Options}!help@{help}}
+\index{help@{help}!Options@{Options}}
+\doxysubsubsection{\texorpdfstring{help}{help}}
+{\footnotesize\ttfamily bool Options\+::help = false}
+
+Indique si le message d\textquotesingle{}aide doit être affiché. \Hypertarget{struct_options_a311affdba82819eb67e5194b1dfc98d4}\label{struct_options_a311affdba82819eb67e5194b1dfc98d4} 
+\index{Options@{Options}!ldX@{ldX}}
+\index{ldX@{ldX}!Options@{Options}}
+\doxysubsubsection{\texorpdfstring{ldX}{ldX}}
+{\footnotesize\ttfamily double Options\+::ldX = 0}
+
+Définit la longueur caractéristique dans la dimension X. \Hypertarget{struct_options_a916bec06c2d2df42b04d111d417829a3}\label{struct_options_a916bec06c2d2df42b04d111d417829a3} 
+\index{Options@{Options}!ldY@{ldY}}
+\index{ldY@{ldY}!Options@{Options}}
+\doxysubsubsection{\texorpdfstring{ldY}{ldY}}
+{\footnotesize\ttfamily double Options\+::ldY = 0}
+
+Définit la longueur caractéristique dans la dimension Y. \Hypertarget{struct_options_a38660a2dc961259db8cc081e9edb6e57}\label{struct_options_a38660a2dc961259db8cc081e9edb6e57} 
+\index{Options@{Options}!ldZ@{ldZ}}
+\index{ldZ@{ldZ}!Options@{Options}}
+\doxysubsubsection{\texorpdfstring{ldZ}{ldZ}}
+{\footnotesize\ttfamily double Options\+::ldZ = 0}
+
+Définit la longueur caractéristique dans la dimension Z. \Hypertarget{struct_options_a1e335096cc42e21dc17257ab53b2b992}\label{struct_options_a1e335096cc42e21dc17257ab53b2b992} 
+\index{Options@{Options}!limiterVitesse@{limiterVitesse}}
+\index{limiterVitesse@{limiterVitesse}!Options@{Options}}
+\doxysubsubsection{\texorpdfstring{limiterVitesse}{limiterVitesse}}
+{\footnotesize\ttfamily bool Options\+::limiter\+Vitesse = false}
+
+Indique si la vitesse doit être limitée. \Hypertarget{struct_options_a4fdd0db5d15bd1d8dbb03c777ba0520a}\label{struct_options_a4fdd0db5d15bd1d8dbb03c777ba0520a} 
+\index{Options@{Options}!rCut@{rCut}}
+\index{rCut@{rCut}!Options@{Options}}
+\doxysubsubsection{\texorpdfstring{rCut}{rCut}}
+{\footnotesize\ttfamily double Options\+::r\+Cut = 2.\+5}
+
+Définit la distance de coupure pour calculer les forces d\textquotesingle{}interaction. \Hypertarget{struct_options_aac084214bc69141549cbb1de139a7cd0}\label{struct_options_aac084214bc69141549cbb1de139a7cd0} 
+\index{Options@{Options}!rCutReflexion@{rCutReflexion}}
+\index{rCutReflexion@{rCutReflexion}!Options@{Options}}
+\doxysubsubsection{\texorpdfstring{rCutReflexion}{rCutReflexion}}
+{\footnotesize\ttfamily double Options\+::r\+Cut\+Reflexion = pow(2, 1.\+0/6)}
+
+Définit la distance de coupure pour calculer la force de réflexion. \Hypertarget{struct_options_aa22f295a37e7f5e6cad676f0c85ea14b}\label{struct_options_aa22f295a37e7f5e6cad676f0c85ea14b} 
+\index{Options@{Options}!sigma@{sigma}}
+\index{sigma@{sigma}!Options@{Options}}
+\doxysubsubsection{\texorpdfstring{sigma}{sigma}}
+{\footnotesize\ttfamily double Options\+::sigma = 1.\+0}
+
+Définit la valeur de sigma. \Hypertarget{struct_options_a02b5170d08ee91c3c9a0add6f9ee07f7}\label{struct_options_a02b5170d08ee91c3c9a0add6f9ee07f7} 
+\index{Options@{Options}!tFinal@{tFinal}}
+\index{tFinal@{tFinal}!Options@{Options}}
+\doxysubsubsection{\texorpdfstring{tFinal}{tFinal}}
+{\footnotesize\ttfamily double Options\+::t\+Final = 19.\+5}
+
+Définit la valeur de t\+Final. \Hypertarget{struct_options_a8a7a031fc298e72957c18999b77b0b83}\label{struct_options_a8a7a031fc298e72957c18999b77b0b83} 
+\index{Options@{Options}!version@{version}}
+\index{version@{version}!Options@{Options}}
+\doxysubsubsection{\texorpdfstring{version}{version}}
+{\footnotesize\ttfamily bool Options\+::version = false}
+
+Indique si les informations sur la version du programme doivent être affichées. 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/julian/\+Documentos/\+ENSI/\+C++/\+TP8/cppma-\/spring2023-\/lab5-\/infra-\/test/\+Project\+\_\+\+Infra\+\_\+\+Test/demo/demo\+\_\+univers.\+cxx\end{DoxyCompactItemize}
