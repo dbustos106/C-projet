@@ -1,4 +1,4 @@
-#include "../../include/simulation.hxx"
+#include "simulation.hxx"
 
 /* Constructeur */
 
@@ -8,7 +8,7 @@ Simulation::Simulation(Univers& univers, bool forceLJ, bool forceIG, bool forceP
     G(G), sigma(sigma), epsilon(epsilon), energieDesiree(energieDesiree), nomDossier(nomDossier)
 {
     /* Ajouter des particules aux cellules */
-    univers.ajouterParticulesAuxCellules();
+    univers.remplirCellules();
 }
 
 /* Méthodes publiques */

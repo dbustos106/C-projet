@@ -1,4 +1,4 @@
-#include "../../include/performance.hxx"
+#include "performance.hxx"
 
 void mesurerPerformance(){
 

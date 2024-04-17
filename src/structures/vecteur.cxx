@@ -1,4 +1,4 @@
-#include "../../include/vecteur.hxx"
+#include "vecteur.hxx"
 
 /* Méthodes publiques */
 

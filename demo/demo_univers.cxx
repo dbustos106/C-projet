@@ -67,12 +67,12 @@
 *
 */
 
-#include "../include/performance.hxx"
-#include "../include/collections.hxx"
-#include "../include/simulation.hxx"
-#include "../include/particule.hxx"
-#include "../include/univers.hxx"
-#include "../include/lecture.hxx"
+#include "performance.hxx"
+#include "collections.hxx"
+#include "simulation.hxx"
+#include "particule.hxx"
+#include "univers.hxx"
+#include "lecture.hxx"
 
 /**
 * @brief Structure définissant les options par défaut du programme.
@@ -102,6 +102,7 @@ struct Options {
     double tFinal = 19.5; /**< Définit la valeur de tFinal. */
     
     std::string adresseFichier; /**< Indiquer le nom du fichier de lecture VTU. */
+    std::string nomDossier;
 
 };
 
@@ -200,28 +201,42 @@ void printUsage() {
 * @param options sont les options sélectionnées.
 */
 
-void verifierOptions(const Options& options){
+void verifierOptions(Options& options){
+    
+    /* Si le drapeau d'aide est activé, afficher l'utilisation */
     if(options.help){
         printUsage();
         exit(0);
     }
 
+    /* Si le drapeau de version est activé, afficher la version */
     if(options.version){
         std::cout << "demo_univers 1.0\n";
         exit(0);
     }
     
+    /* Si l'adresse du fichier d'entrée n'est pas fournie, demandez-la */
     if(options.adresseFichier.empty()){
         std::cout << "Entrez l'adresse du fichier d'entrée\n"; 
         exit(0);
     }
 
+    /* Vérifier le format du fichier d'entrée */
     size_t positionExtension = options.adresseFichier.find_last_of(".");
     if(positionExtension == std::string::npos || options.adresseFichier.substr(positionExtension) != ".vtu"){
         std::cerr << "Erreur : Extension de fichier différente de .vtu\n";
         exit(0);
     }
 
+    /* Prendre le nom du fichier d'entrée comme nom pour le dossier de sortie */
+    std::string nomFichier = options.adresseFichier.substr(0, positionExtension);
+    size_t PositionDernierSlash = nomFichier.find_last_of("/\\");
+    if(PositionDernierSlash != std::string::npos){
+        nomFichier = nomFichier.substr(PositionDernierSlash + 1);
+    }
+    options.nomDossier = nomFichier;
+
+    /* Vérifier les dimensions de l'univers */
     if(options.ldX == 0 && options.ldY == 0 && options.ldZ == 0){
         std::cerr << "Attention : les dimensions de l'univers sont (0, 0, 0).\n";
         exit(0);
@@ -234,7 +249,7 @@ void verifierOptions(const Options& options){
 * @param options sont les options sélectionnées.
 */
 
-void printOptions(const Options& options) {
+void printOptions(const Options& options){
     std::cout << "Options de simulation :\n"
               << "\tLongueur en X : " << options.ldX << "\n"
               << "\tLongueur en Y : " << options.ldY << "\n"
@@ -269,29 +284,6 @@ void printOptions(const Options& options) {
 
 }
 
-/**
-* @brief Fonction qui extrait le nom du fichier d'une adresse de fichier.
-* @param adresseFichier est l'adresse du fichier dont le nom doit être extrait.
-* @return Nom du fichier sans l'extension.
-*/
-
-std::string extraireNomFichier(const std::string& adresseFichier) {
-    /* Trouver l'apparition de l'extension ".vtu" et la supprimer */
-    size_t positionExtension = adresseFichier.find_last_of(".");
-    std::string nomFichier = adresseFichier.substr(0, positionExtension);
-
-    /* Trouver la dernière occurrence du caractère diagonal (/) */
-    size_t PositionDernierSlash = nomFichier.find_last_of("/\\");
-
-    /* Si aucun slash n'est trouvé, retourner l'adresse complète */
-    if (PositionDernierSlash == std::string::npos){
-        return nomFichier;
-    }
-
-    /* Extraire la partie de la chaîne après le dernier slash */
-    return nomFichier.substr(PositionDernierSlash + 1);
-}
-
 int main(int argc, char *argv[]){
 
     if(argc == 1){
@@ -312,13 +304,10 @@ int main(int argc, char *argv[]){
 
     /* Ajouter les particules du fichier d'entrée */
     lectureDuFichier(options.adresseFichier, univers);
-
-    /* Obtenir le nom du dossier où les fichiers de sortie VTU seront sauvegardés */
-    std::string nomDossier = extraireNomFichier(options.adresseFichier);
     
     /* Créer la simulation et démarrer l'algorithme de Stromer-Verlet */
     Simulation simulation(univers, options.forceLJ, options.forceIG, options.forcePG, 
-                    options.G, options.sigma, options.epsilon, options.energieDesiree, nomDossier);
+                    options.G, options.sigma, options.epsilon, options.energieDesiree, options.nomDossier);
     simulation.stromerVerlet(options.delta, options.tFinal, options.limiterVitesse);
     
     /* Mesurer le temps de fin de la simulation */

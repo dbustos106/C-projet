@@ -1,4 +1,4 @@
-#include "../../include/particule.hxx"
+#include "particule.hxx"
 
 int Particule::nextId = 1;
 

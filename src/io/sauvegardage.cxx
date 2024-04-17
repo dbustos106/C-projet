@@ -1,10 +1,10 @@
-#include "../../include/sauvegardage.hxx"
+#include "sauvegardage.hxx"
 
 void creerDossier(std::string& nomDossier){
     struct stat info;
     if(stat(nomDossier.c_str(), &info) != 0){
         if(mkdir(nomDossier.c_str(), 0777) != 0){
-            std::cerr << "Erreur : échec de la création du dossier.";
+            std::cerr << "Erreur lors de la création du dossier.";
             exit(0);
         }
     }

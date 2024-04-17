@@ -1,4 +1,4 @@
-#include "../../include/imprimer.hxx"
+#include "imprimer.hxx"
 
 void imprimerParticulesSurConsole(std::vector<Particule>& particules){
     for(auto& particule : particules){

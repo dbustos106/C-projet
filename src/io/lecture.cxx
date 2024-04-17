@@ -1,4 +1,4 @@
-#include "../../include/lecture.hxx"
+#include "lecture.hxx"
 
 void lectureDuFichier(const std::string& adresseFichier, Univers& univers){
     

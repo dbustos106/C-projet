@@ -86,11 +86,11 @@ class Univers{
         void deplacerParticule(Particule& particule, Vecteur&& vec);
 
         /**
-        * @brief Fonction qui ajoute chaque particule à la cellule à 
-        *        laquelle elle appartient (À la vecteur de pointeurs). 
+        * @brief Une fonction qui remplit le vecteur de pointeurs de
+        *        chaque cellule avec les particules correspondantes. 
         */
 
-        void ajouterParticulesAuxCellules();
+        void remplirCellules();
         
         /**
         * @brief Fonction qui vérifie la position des particules 

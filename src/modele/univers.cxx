@@ -1,4 +1,4 @@
-#include "../../include/univers.hxx"
+#include "univers.hxx"
 
 /* Constructeur */
 
@@ -185,7 +185,7 @@ void Univers::deplacerParticule(Particule& particule, Vecteur&& vec){
 
 }
 
-void Univers::ajouterParticulesAuxCellules(){
+void Univers::remplirCellules(){
     for(auto& particule : particules){
 
         /* Calculer les indices de la cellule */
