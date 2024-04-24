@@ -30,11 +30,16 @@ void Configuration::lireFichierConfiguration(){
         /* Séparer la ligne en clé et valeur */
         std::string key, value;
         std::istringstream iss(line);
-        if(!(std::getline(iss, key, '=') && std::getline(iss, value))){
+        if(!std::getline(iss, key, '=')){
             std::cerr << "Erreur de format dans le fichier de configuration. \n";
             exit(0);
         }
-
+            
+        /* Continuer si value est vide */
+        if(!std::getline(iss, value)){
+            continue;
+        }
+        
         /* Supprimer les espaces autour de la clé et de la valeur */
         key.erase(0, key.find_first_not_of(" \t\r\n"));
         key.erase(key.find_last_not_of(" \t\r\n") + 1);
