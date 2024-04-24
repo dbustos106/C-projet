@@ -2,14 +2,12 @@
 
 void lectureDuFichier(const std::string& adresseFichier, Univers& univers){
     
-    /* Ouvrir le fichier de lecture */
-    std::ifstream fichier(adresseFichier);
-    if(!fichier.is_open()){
-        throw std::runtime_error("Erreur lors de l'overture du fichier d'entrée.");
-    }
-
-    unsigned long nombreParticules = -1;
+    /* Créer un vecteur pour stocker les particules */
     std::vector<Particule> particules;
+    unsigned long nombreParticules = -1;
+
+    /* Ouvrir le fichier de lecture */
+    std::ifstream fichier = ouvrirFichierDEntree(adresseFichier);
     std::string line;
 
     /* Lire le nombre de particules dans le fichier */
@@ -40,7 +38,7 @@ void lectureDuFichier(const std::string& adresseFichier, Univers& univers){
             } 
             std::stringstream stream(line);
             
-            float x, y, z;
+            double x, y, z;
             for(unsigned long i = 0; i < nombreParticules; i++){
                 if(!(stream >> x >> y >> z)){
                     throw std::runtime_error("Erreur dans la lecture des positions\n");
@@ -66,12 +64,12 @@ void lectureDuFichier(const std::string& adresseFichier, Univers& univers){
             std::stringstream stream(line);
         
             for(unsigned long i = 0; i < nombreParticules; i++){
-                float vx, vy, vz;
+                double vx, vy, vz;
                 if(!(stream >> vx >> vy >> vz)){
                     throw std::runtime_error("Erreur dans la lecture des vitesses\n");
                 }
         
-                particules[i].setVitesse(Vecteur(vx, vy, vz));
+                particules[i].setVitesse(Vecteur<double>(vx, vy, vz));
             }
             break;
         }

@@ -3,6 +3,7 @@
 #include <iostream>
 #include <chrono>
 
+#include "configuration.hxx"
 #include "collections.hxx"
 #include "univers.hxx"
 
@@ -22,8 +23,8 @@ void mesurerPerformance();
 void mesurerPerformanceInsertionUnivers(int nombreParticules);
 
 /**
-* @brief Fonction permettant de mesurer les performances d'insertion
-*        dans une collection de particules
+* @brief Fonction permettant de mesurer les performances 
+*        d'insertion dans une collection de particules
 * @param[in] particules est la collection de particules.
 * @param[in] size est le nombre de particules à créer.
 */

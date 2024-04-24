@@ -8,7 +8,7 @@
 * @param[in] particules est le vecteur de particules.
 */
 
-void imprimerParticulesSurConsole(std::vector<Particule>& particules);
+void imprimerParticulesSurConsole(const std::vector<Particule>& particules);
 
 /**
 * @brief Fonction pour imprimer sur la console les cellules
@@ -16,4 +16,4 @@ void imprimerParticulesSurConsole(std::vector<Particule>& particules);
 * @param[in] grille est la grille à imprimer.
 */
 
-void imprimerGrilleSurConsole(std::vector<Cellule>& grille);
+void imprimerGrilleSurConsole(const std::vector<Cellule>& grille);

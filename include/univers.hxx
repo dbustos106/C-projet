@@ -2,9 +2,10 @@
 
 #include <random>
 
-#include "cellule.hxx"
+#include "configuration.hxx"
 #include "collections.hxx"
 #include "imprimer.hxx"
+#include "cellule.hxx"
 
 /**
 * @brief Classe représentant un univers de particules.
@@ -17,13 +18,13 @@ class Univers{
         std::vector<Cellule> grille; /**< Vecteur contenant les cellules de l'univers. */
         std::vector<Particule> particules; /**< Vecteur contenant les particules de l'univers. */
 
-        Vecteur ld; /**< Vecteur des longueurs caractéristiques de l'univers. */
-        Vecteur nc; /**< Nombre de cellules dans chaque dimension de la grille. */
-        double rCut; /**< Rayon de coupure pour les interactions attractives. */
-        double rCutReflexion; /**< Rayon de coupure pour les réflexions aux bords. */
-
-        int nombreParticules; /**< Nombre total de particules dans l'univers. */
-        int conditionLimite; /**< Type de condition limite appliquée à l'univers. */
+        Vecteur<double> ld; /**< Vecteur des longueurs caractéristiques de l'univers. */
+        Vecteur<int> nc; /**< Vecteur définissant les dimensions de la grille de cellules qui divisent l'univers. */
+        
+        ConditionLimite conditionLimite; /**< Définit le type de condition limite. */
+        double rCutReflexion;  /**< Définit la distance de coupure pour calculer la force de réflexion. */
+        double rCut; /**< Définit la distance de coupure pour calculer les forces d'interaction. */
+        int nombreParticules; /**< Définit le nombre total de particules dans l'univers. */
 
         /* Méthodes privées */
 
@@ -44,13 +45,9 @@ class Univers{
 
         /**
         * @brief Constructeur de la classe Univers.
-        * @param ld est le vecteur des longueurs caractéristiques de l'univers.
-        * @param rCut est le rayon de coupure pour les interactions attractives.
-        * @param rCutReflexion est le rayon de coupure pour les réflexions aux bords.
-        * @param conditionLimite est le type de condition limite appliquée à l'univers.
         */
 
-        Univers(Vecteur& ld, double rCut, double rCutReflexion, int conditionLimite);
+        Univers();
 
         /* Méthodes publiques */
 
@@ -75,7 +72,7 @@ class Univers{
         * @return vecteur direction entre les deux particules.
         */
 
-        Vecteur calculerVecteurDirection(Particule& particule1, Particule& particule2);
+        Vecteur<double> calculerVecteurDirection(Particule* particule1, Particule* particule2);
         
         /**
         * @brief Fonction qui déplace une particule vers une direction donnée.
@@ -83,7 +80,7 @@ class Univers{
         * @param[in] vec est la direction à déplacer.
         */
 
-        void deplacerParticule(Particule& particule, Vecteur&& vec);
+        void deplacerParticule(Particule* particule, Vecteur<double>&& vec);
 
         /**
         * @brief Une fonction qui remplit le vecteur de pointeurs de
@@ -106,21 +103,14 @@ class Univers{
         * @return Référence au vecteur de cellules de l'univers.
         */
 
-        std::vector<Cellule>& getGrille();
-        
-        /**
-        * @brief Fonction qui obtient une référence au vecteur de particules de l'univers.
-        * @return Référence au vecteur de particules de l'univers.
-        */
-        
-        std::vector<Particule>& getParticules();
+        const std::vector<Cellule>& getGrille() const;
         
         /**
         * @brief Fonction qui obtient une référence au vecteur des longueurs caractéristiques de l'univers.
         * @return Référence au vecteur des longueurs caractéristiques.
         */
 
-        const Vecteur& getLd() const;
+        const Vecteur<double>& getLd() const;
         
         /**
         * @brief Fonction qui obtient le rayon de coupure pour les réflexions aux bords.
@@ -148,6 +138,6 @@ class Univers{
         * @return Type de condition limite appliquée à l'univers.
         */
         
-        int getConditionLimite() const;
+        ConditionLimite getConditionLimite() const;
 
 };

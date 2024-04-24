@@ -6,10 +6,6 @@ Cellule::Cellule() : bord(false) {}
 
 /* Méthodes publiques */
 
-bool Cellule::comparerIndices(int autreX, int autreY, int autreZ){
-    return indices.getX() == autreX && indices.getY() == autreY && indices.getZ() == autreZ;
-}
-
 void Cellule::ajouterParticule(Particule* particule) {
     particules.push_back(particule);
 }
@@ -18,21 +14,29 @@ void Cellule::ajouterVoisine(Cellule* voisine){
     voisines.push_back(voisine);
 }
 
+bool Cellule::comparerIndices(int autreX, int autreY, int autreZ) const{
+    return indices.getX() == autreX && indices.getY() == autreY && indices.getZ() == autreZ;
+}
+
+std::vector<Particule*>::const_iterator Cellule::suprimerParticule(std::vector<Particule*>::const_iterator it){
+    return particules.erase(it);
+}
+
 /* Getters */
 
-std::vector<Particule*>& Cellule::getParticules(){
+const std::vector<Particule*>& Cellule::getParticules() const{
     return particules;
 }
 
-std::vector<Cellule*>& Cellule::getVoisines(){
+const std::vector<Cellule*>& Cellule::getVoisines() const{
     return voisines;
 }
 
-Vecteur Cellule::getIndices(){
+const Vecteur<int>& Cellule::getIndices() const{
     return indices;
 }
 
-bool Cellule::isBord(){
+bool Cellule::isBord() const{
     return bord;
 }
 

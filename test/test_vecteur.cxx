@@ -2,7 +2,7 @@
 #include "../include/vecteur.hxx"
 
 TEST(VecteurTest, testGettersAndSetters){
-    Vecteur vec(1.0, 2.0, 3.0);
+    Vecteur<double> vec(1.0, 2.0, 3.0);
 
     ASSERT_EQ(vec.getX(), 1.0);
     ASSERT_EQ(vec.getY(), 2.0);
@@ -18,17 +18,17 @@ TEST(VecteurTest, testGettersAndSetters){
 }
 
 TEST(VecteurTest, testOperatorEqual){
-    Vecteur vec1(3.0, 4.0, 5.0);
-    Vecteur vec2(3.0, 4.0, 5.0);
+    Vecteur<double> vec1(3.0, 4.0, 5.0);
+    Vecteur<double> vec2(3.0, 4.0, 5.0);
 
     ASSERT_TRUE(vec1 == vec2);
-    ASSERT_TRUE(vec1 == Vecteur(3.0, 4.0, 5.0));
-    ASSERT_TRUE(Vecteur(3.0, 4.0, 5.0) == Vecteur(3.0, 4.0, 5.0));
+    ASSERT_TRUE(vec1 == Vecteur<double>(3.0, 4.0, 5.0));
+    ASSERT_TRUE(Vecteur<double>(3.0, 4.0, 5.0) == Vecteur<double>(3, 4, 5));
 }
 
 TEST(VecteurTest, testOperatorPlusEqual){
-    Vecteur vec1(1.0, 2.0, 3.0);
-    Vecteur vec2(4.0, 5.0, 6.0);
+    Vecteur<double> vec1(1.0, 2.0, 3.0);
+    Vecteur<double> vec2(4.0, 5.0, 6.0);
 
     vec1 += vec2;
 
@@ -38,8 +38,8 @@ TEST(VecteurTest, testOperatorPlusEqual){
 }
 
 TEST(VecteurTest, testOperatorMinusEqual){
-    Vecteur vec1(4.0, 5.0, 6.0);
-    Vecteur vec2(1.0, 2.0, 3.0);
+    Vecteur<double> vec1(4.0, 5.0, 6.0);
+    Vecteur<double> vec2(1.0, 2.0, 3.0);
 
     vec1 -= vec2;
 
@@ -49,7 +49,7 @@ TEST(VecteurTest, testOperatorMinusEqual){
 }
 
 TEST(VecteurTest, testOperatorOutput){
-    Vecteur vec(1.0, 2.0, 3.0);
+    Vecteur<double> vec(1.0, 2.0, 3.0);
 
     std::stringstream ss;
     ss << vec;
@@ -58,8 +58,8 @@ TEST(VecteurTest, testOperatorOutput){
 }
 
 TEST(VecteurTest, testDistance){
-    Vecteur vec1(4.0, 3.3, -2);
-    Vecteur vec2(5.0, 4.5, 4);
+    Vecteur<double> vec1(4.0, 3.3, -2);
+    Vecteur<double> vec2(5.0, 4.5, 4);
 
     double distance = vec1.distance(vec2);
 
@@ -67,10 +67,10 @@ TEST(VecteurTest, testDistance){
 }
 
 TEST(VecteurTest, testOperatorPlus){
-    Vecteur vec1(1.0, 2.0, 3.0);
-    Vecteur vec2(4.0, 5.0, 6.0);
+    Vecteur<double> vec1(1.0, 2.0, 3.0);
+    Vecteur<double> vec2(4.0, 5.0, 6.0);
 
-    Vecteur result = vec1 + vec2;
+    Vecteur<double> result = vec1 + vec2;
 
     ASSERT_EQ(result.getX(), 5.0);
     ASSERT_EQ(result.getY(), 7.0);
@@ -78,10 +78,10 @@ TEST(VecteurTest, testOperatorPlus){
 }
 
 TEST(VecteurTest, testOperatorMinus){
-    Vecteur vec1(4.0, 5.0, 6.0);
-    Vecteur vec2(1.0, 2.0, 3.0);
+    Vecteur<double> vec1(4.0, 5.0, 6.0);
+    Vecteur<double> vec2(1.0, 2.0, 3.0);
 
-    Vecteur result = vec1 - vec2;
+    Vecteur<double> result = vec1 - vec2;
 
     ASSERT_EQ(result.getX(), 3.0);
     ASSERT_EQ(result.getY(), 3.0);
@@ -89,11 +89,11 @@ TEST(VecteurTest, testOperatorMinus){
 }
 
 TEST(VecteurTest, testOperatorMultiply){
-    Vecteur vec(1.0, 2.0, 3.0);
+    Vecteur<double> vec(1.0, 2.0, 3.0);
     double scalaire = 2.0;
 
-    Vecteur result1 = vec * scalaire;
-    Vecteur result2 = scalaire * vec;
+    Vecteur<double> result1 = vec * scalaire;
+    Vecteur<double> result2 = scalaire * vec;
 
     ASSERT_EQ(result1.getX(), 2.0);
     ASSERT_EQ(result1.getY(), 4.0);
@@ -105,10 +105,10 @@ TEST(VecteurTest, testOperatorMultiply){
 }
 
 TEST(VecteurTest, testOperatorDivision){
-    Vecteur vec(2.0, 4.0, 6.0);
+    Vecteur<double> vec(2.0, 4.0, 6.0);
     double scalaire = 2.0;
 
-    Vecteur result = vec / scalaire;
+    Vecteur<double> result = vec / scalaire;
 
     ASSERT_EQ(result.getX(), 1.0);
     ASSERT_EQ(result.getY(), 2.0);

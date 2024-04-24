@@ -14,7 +14,7 @@ class Cellule{
         std::vector<Particule*> particules; /**< Vecteur de pointeurs vers les particules contenues dans la cellule. */
         std::vector<Cellule*> voisines; /**< Vecteur de pointeurs vers les cellules voisines. */
 
-        Vecteur indices; /**< Indices identifiant la position de la cellule dans l'univers. */
+        Vecteur<int> indices; /**< Indices identifiant la position de la cellule dans l'univers. */
         bool bord; /**< Indique si la cellule se trouve sur le bord de l'univers. */
 
     public:
@@ -30,16 +30,6 @@ class Cellule{
         /* Méthodes publiques */
 
         /**
-        * @brief Fonction qui compare les indices de la cellule avec ceux fournis.
-        * @param x est la valeur X à comparer.
-        * @param y est la valeur Y à comparer.
-        * @param z est la valeur Z à comparer.
-        * @return True si les indices correspondent, False sinon.
-        */
-
-        bool comparerIndices(int x, int y, int z);
-        
-        /**
         * @brief Fonction qui ajoute une particule à la cellule.
         * @param particule est le pointeur vers la particule à ajouter.
         */
@@ -53,6 +43,24 @@ class Cellule{
         
         void ajouterVoisine(Cellule* voisine);
 
+        /**
+        * @brief Fonction qui compare les indices de la cellule avec ceux fournis.
+        * @param x est la valeur X à comparer.
+        * @param y est la valeur Y à comparer.
+        * @param z est la valeur Z à comparer.
+        * @return True si les indices correspondent, False sinon.
+        */
+
+        bool comparerIndices(int x, int y, int z) const;
+
+        /**
+        * @brief Fonction qui supprime un pointeur de la liste de particules en utilisant un itérateur fourni comme argument.
+        * @param it est le itérateur.
+        * @return L'itérateur suivant après l'élément supprimé.
+        */
+
+        std::vector<Particule*>::const_iterator suprimerParticule(std::vector<Particule*>::const_iterator it);
+
         /* Getters */
 
         /**
@@ -60,28 +68,28 @@ class Cellule{
         * @return Vecteur de pointeurs vers les particules contenues.
         */
 
-        std::vector<Particule*>& getParticules();
+        const std::vector<Particule*>& getParticules() const;
         
         /**
         * @brief Fonction qui obtient les cellules voisines.
         * @return Vecteur de pointeurs vers les cellules voisines.
         */
         
-        std::vector<Cellule*>& getVoisines();
+        const std::vector<Cellule*>& getVoisines() const;
         
         /**
         * @brief Fonction qui obtient les indices de la cellule.
         * @return Vecteur contenant les indices de la cellule.
         */
 
-        Vecteur getIndices();
+        const Vecteur<int>& getIndices() const;
         
         /**
         * @brief Fonction qui vérifie si la cellule est sur le bord du système.
         * @return True si la cellule est sur le bord, False sinon.
         */
 
-        bool isBord();
+        bool isBord() const;
 
         /* Setters */
 

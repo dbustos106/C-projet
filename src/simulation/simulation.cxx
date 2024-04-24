@@ -2,38 +2,56 @@
 
 /* Constructeur */
 
-Simulation::Simulation(Univers& univers, bool forceLJ, bool forceIG, bool forcePG, 
-        double G, double sigma, double epsilon, double energieDesiree, std::string& nomDossier) : 
-    univers(univers), forceLJ(forceLJ), forceIG(forceIG), forcePG(forcePG),
-    G(G), sigma(sigma), epsilon(epsilon), energieDesiree(energieDesiree), nomDossier(nomDossier)
-{
+Simulation::Simulation(Univers& univers) : univers(univers){
+
+    /* Accéder à l'instance de configuration */
+    Configuration& configuration = Configuration::getInstance();
+
+    forceLJ = configuration.getForceLJ();
+    forceIG = configuration.getForceIG();
+    forcePG = configuration.getForcePG();
+    
+    limiterVitesse = configuration.getLimiterVitesse();
+    energieDesiree = configuration.getEnergieDesiree();
+
+    epsilon = configuration.getEpsilon();
+    sigma = configuration.getSigma();
+    G = configuration.getG();
+
+    delta = configuration.getDelta();
+    tFinal = configuration.getTFinal();
+
+    /* Créer un dossier pour les fichiers de sortie */
+    nomDossier = configuration.getNomDossier();
+    creerDossier(nomDossier);
+
+    /* Ouvrir le fichier texte qui sera utilisé pour stocker l'état de l'univers */
+    fichierTexte = ouvrirFichierDeSortie(nomDossier + "/simulation.txt");
+
     /* Ajouter des particules aux cellules */
     univers.remplirCellules();
 }
 
 /* Méthodes publiques */
 
-void Simulation::stromerVerlet(double delta, double tFinal, bool limiterVitesse){
+void Simulation::stromerVerlet(){
 
     /* Calculer les forces */
     calculerForcesDuSysteme();
 
     /* Sauvegarder l'etat de l'univers */
-    //std::ofstream fichierTexte = ouvrirFichier(dossier + "/sim.txt");
-    //sauvegarderEtatEnTexte(fichierTexte, univers, 0);
-    creerDossier(nomDossier);
+    sauvegarderEtatEnTexte(fichierTexte, univers, 0);
     sauvegarderEtatEnVTU(nomDossier, univers, 0);
 
     double t = 0;
     for(int i = 0; t < tFinal; t = t + delta, i++){
 
         /* Mettre à jour les paramètres de position */
-        for(auto& cellule : univers.getGrille()){
-            for(const auto& particulePtr : cellule.getParticules()){
-                Particule& particule = *particulePtr;
-                univers.deplacerParticule(particule, particule.getVitesse()*delta + (0.5/particule.getMasse())*particule.getForce()*pow(delta, 2));
-                particule.setFold(particule.getForce());
-                particule.setCelluleConfirmee(false);
+        for(const auto& cellule : univers.getGrille()){
+            for(auto particule : cellule.getParticules()){
+                univers.deplacerParticule(particule, particule->getVitesse()*delta + (0.5/particule->getMasse())*particule->getForce()*pow(delta, 2));
+                particule->setFold(particule->getForce());
+                particule->setCelluleConfirmee(false);
             }
         }
         univers.corrigerCellules();
@@ -42,10 +60,9 @@ void Simulation::stromerVerlet(double delta, double tFinal, bool limiterVitesse)
         calculerForcesDuSysteme();
         
         /* Mettre à jour les paramètres de vitesse */
-        for(auto& cellule : univers.getGrille()){
-            for(const auto& particulePtr : cellule.getParticules()){
-                Particule& particule = *particulePtr;
-                particule.accelerer(delta*(0.5/particule.getMasse())*(particule.getForce() + particule.getFold()));
+        for(const auto& cellule : univers.getGrille()){
+            for(auto particule : cellule.getParticules()){
+                particule->accelerer(delta*(0.5/particule->getMasse())*(particule->getForce() + particule->getFold()));
             }
         }
 
@@ -53,17 +70,16 @@ void Simulation::stromerVerlet(double delta, double tFinal, bool limiterVitesse)
         if(limiterVitesse && i % 1000 == 0){
             double energieCinetique = calculerEnergieCinetique();
             double beta = std::sqrt(energieDesiree/energieCinetique);
-            for(auto& cellule : univers.getGrille()){
-                for(const auto& particulePtr : cellule.getParticules()){
-                    Particule& particule = *particulePtr;
-                    particule.setVitesse(particule.getVitesse() * beta);
+            for(const auto& cellule : univers.getGrille()){
+                for(auto particule : cellule.getParticules()){
+                    particule->setVitesse(particule->getVitesse() * beta);
                 }
             }
         }
 
         if(i % 1000 == 0){
             /* Sauvegarder l'etat de l'univers */
-            //sauvegarderEtatEnTexte(fichierTexte, univers, i);
+            sauvegarderEtatEnTexte(fichierTexte, univers, i);
             sauvegarderEtatEnVTU(nomDossier, univers, i);
         }
 
@@ -75,11 +91,10 @@ void Simulation::stromerVerlet(double delta, double tFinal, bool limiterVitesse)
 void Simulation::calculerForcesDuSysteme(){ 
     
     /* Calculer les forces de réflexion */
-    if(univers.getConditionLimite() == 1){
-        for(auto& cellule : univers.getGrille()){
+    if(univers.getConditionLimite() == ConditionLimite::Reflexion){
+        for(const auto& cellule : univers.getGrille()){
             if(cellule.isBord()){
-                for(const auto& particulePtr : cellule.getParticules()){
-                    Particule& particule = *particulePtr;
+                for(auto particule : cellule.getParticules()){
                     calculerForceReflexive(particule);
                 }
             }
@@ -87,20 +102,19 @@ void Simulation::calculerForcesDuSysteme(){
     }
 
     /* Calculer les forces pour chaque particule */
-    for(auto& cellule : univers.getGrille()){
-        for(const auto& particulePtr : cellule.getParticules()){
-            Particule& particule = *particulePtr;
+    for(const auto& cellule : univers.getGrille()){
+        for(auto particule : cellule.getParticules()){
             calculerForceSurParticule(cellule, particule);
         }
     }
 
 }
 
-void Simulation::calculerForceReflexive(Particule& particule){
+void Simulation::calculerForceReflexive(Particule* particule){
     double rCutReflexion = univers.getRCutReflexion();
-    const Vecteur& ld = univers.getLd();
+    const Vecteur<double>& ld = univers.getLd();
 
-    Vecteur &position = particule.getPosition();
+    const Vecteur<double> &position = particule->getPosition();
 
     double dx = position.getX();
     double dy = position.getY();
@@ -116,7 +130,7 @@ void Simulation::calculerForceReflexive(Particule& particule){
         dz -= std::copysign(ld.getZ(), dz);
     }
     
-    Vecteur force(0, 0, 0);
+    Vecteur<double> force(0, 0, 0);
     double aux1 = -24 * epsilon;
 
     if(dx < rCutReflexion && ld.getX() > 0){
@@ -132,47 +146,46 @@ void Simulation::calculerForceReflexive(Particule& particule){
         force.setZ(aux1 * (1.0/(2*dz))*aux2*(1-2*aux2));
     }
 
-    particule.setForce(particule.getForce() + force);
+    particule->setForce(particule->getForce() + force);
 }
 
-void Simulation::calculerForceSurParticule(Cellule& cellule, Particule& particule){
+void Simulation::calculerForceSurParticule(const Cellule& cellule, Particule* particule){
     
     /* Initialiser la force pour chaque particule. */
-    particule.setForce(particule.getForce() - particule.getFold());
+    particule->setForce(particule->getForce() - particule->getFold());
 
     if(forcePG){
         /* Calculer la force du potentiel gravitationnel */
-        Vecteur force = Vecteur(0, particule.getMasse() * G, 0);
-        particule.setForce(particule.getForce() + force);
+        Vecteur<double> force(0, particule->getMasse() * G, 0);
+        particule->setForce(particule->getForce() + force);
     }
 
     /* Calculer les forces d'interaction entre particules */
     double aux1 = 24*epsilon;
-    for(auto& voisine : cellule.getVoisines()){
-        for(const auto& autreParticulePtr : voisine->getParticules()){
-            Particule& autreParticule = *autreParticulePtr;
+    for(auto voisine : cellule.getVoisines()){
+        for(auto autreParticule : voisine->getParticules()){
 
-            if(particule.getId() > autreParticule.getId()){
+            if(particule->getId() > autreParticule->getId()){
 
                 /* Calculer vecteur direction et distance entre les particules */
-                Vecteur direction = univers.calculerVecteurDirection(particule, autreParticule); 
+                Vecteur<double> direction = univers.calculerVecteurDirection(particule, autreParticule); 
                 double distance = direction.norme();
                 
                 /* Ajouter la force d’interaction du potentiel de Lennard-Jones */      
                 if(forceLJ && distance < univers.getRCut() && distance != 0){     
                     double aux2 = pow(sigma/distance, 6);
                     double magnitude = aux1*(1/pow(distance, 2))*aux2*(1-2*aux2);
-                    Vecteur force = direction * magnitude;
-                    autreParticule.setForce(autreParticule.getForce() - force);
-                    particule.setForce(particule.getForce() + force);
+                    Vecteur<double> force = direction * magnitude;
+                    particule->setForce(particule->getForce() + force);
+                    autreParticule->setForce(autreParticule->getForce() - force);
                 }
 
                 /* Ajouter la force d’interaction gravitationnelle */
                 if(forceIG && distance < univers.getRCut() && distance != 0){
-                    double magnitude = particule.getMasse()*autreParticule.getMasse() / pow(distance, 3);
-                    Vecteur force = direction * magnitude;
-                    autreParticule.setForce(autreParticule.getForce() - force);
-                    particule.setForce(particule.getForce() + force);
+                    double magnitude = particule->getMasse()*autreParticule->getMasse() / pow(distance, 3);
+                    Vecteur<double> force = direction * magnitude;
+                    autreParticule->setForce(autreParticule->getForce() - force);
+                    particule->setForce(particule->getForce() + force);
                 }
             }
 
@@ -183,9 +196,8 @@ void Simulation::calculerForceSurParticule(Cellule& cellule, Particule& particul
 double Simulation::calculerEnergieCinetique(){
     double energieCinetique = 0;
     for(auto& cellule : univers.getGrille()){
-        for(const auto& particulePtr : cellule.getParticules()){
-            Particule& particule = *particulePtr;
-            energieCinetique += particule.getMasse()*pow(particule.getVitesse().norme(), 2);
+        for(auto particule : cellule.getParticules()){
+            energieCinetique += particule->getMasse()*pow(particule->getVitesse().norme(), 2);
         }
     }
     energieCinetique /= 2;

@@ -2,35 +2,42 @@
 
 /* Constructeur */
 
-Univers::Univers(Vecteur& ld, double rCut, double rCutReflexion, int conditionLimite) :
-    ld(ld), rCut(rCut), rCutReflexion(rCutReflexion), 
-    nombreParticules(0), conditionLimite(conditionLimite) 
-{
+Univers::Univers() : nombreParticules(0){
 
+    /* Accéder à l'instance de configuration */
+    Configuration& configuration = Configuration::getInstance();
+    
     /* Vérifier les rayons de coupure */
+    rCutReflexion = configuration.getRCutReflexion();
+    rCut = configuration.getRCut();
     if(rCut < rCutReflexion){
         std::cerr << "Erreur : Rayon de coupure inférieur au rayon de réflexion\n";
         exit(0);
     }
 
+    /* Créer un vecteur de longueurs caractéristiques */
+    double ldX = configuration.getLdX();
+    double ldY = configuration.getLdY();
+    double ldZ = configuration.getLdZ();
+    ld = Vecteur<double>(ldX, ldY, ldZ);
+
+    /* Récupérer la condition limite */
+    conditionLimite = configuration.getConditionLimite();
+
     /* Calculer le nombre de cellules par direction */
-    nc.setX((ld.getX() != 0) ? floor(ld.getX() / rCut) : 1);
-    nc.setY((ld.getY() != 0) ? floor(ld.getY() / rCut) : 1);
-    nc.setZ((ld.getZ() != 0) ? floor(ld.getZ() / rCut) : 1);
+    nc.setX((ldX != 0) ? floor(ldX / rCut) : 1);
+    nc.setY((ldY != 0) ? floor(ldY / rCut) : 1);
+    nc.setZ((ldZ != 0) ? floor(ldZ / rCut) : 1);
 
     /* Vérifier les nombres de cellules */
-    if(nc.getX() <= 0){
-        std::cerr << "Erreur : Longueur caractéristique de X inférieure à rCut";
+    if(nc.getX() <= 0 || nc.getY() <= 0 || nc.getZ() <= 0){
+        std::cerr << "Erreur : Une des longueurs caractéristiques est inférieure à rCut";
         exit(0);
     }
     
-    if(nc.getY() <= 0){
-        std::cerr << "Erreur : Longueur caractéristique de Y inférieure à rCut";
-        exit(0);
-    }
-    
-    if(nc.getZ() <= 0){
-        std::cerr << "Erreur : Longueur caractéristique de Z inférieure à rCut";
+    /* Vérifier les dimensions de l'univers */
+    if(ldX == 0 && ldY == 0 && ldZ == 0){
+        std::cerr << "Erreur : Les dimensions de l'univers sont (0, 0, 0).\n";
         exit(0);
     }
 
@@ -71,7 +78,7 @@ void Univers::ajouterVoisines(int indice, int x, int y, int z){
             for(int dz = -1; dz <= 1; dz++){
                 
                 /* Éviter les voisins répétés en nombre de cellule égale à 1 et 2 */
-                if ((nc.getX() == 1 && dx != 0) || (nc.getX() == 2 && dx < 0) || 
+                if((nc.getX() == 1 && dx != 0) || (nc.getX() == 2 && dx < 0) || 
                     (nc.getY() == 1 && dy != 0) || (nc.getY() == 2 && dy < 0) ||
                     (nc.getZ() == 1 && dz != 0) || (nc.getZ() == 2 && dz < 0)) {
                     continue;
@@ -83,10 +90,10 @@ void Univers::ajouterVoisines(int indice, int x, int y, int z){
                 int nz = z + dz;
 
                 /* Appliquer des conditions périodiques */
-                if (conditionLimite == 3) {
-                    nx = std::fmod(nx + nc.getX(), nc.getX());
-                    ny = std::fmod(ny + nc.getY(), nc.getY());
-                    nz = std::fmod(nz + nc.getZ(), nc.getZ());
+                if(conditionLimite == ConditionLimite::Periodique){
+                    nx = (nx + nc.getX()) % nc.getX();
+                    ny = (ny + nc.getY()) % nc.getY();
+                    nz = (nz + nc.getZ()) % nc.getZ();
                 }
 
                 /* Vérifier les limites de la grille */
@@ -129,9 +136,9 @@ void Univers::ajouterParticulesAleatoires(int n){
     }
 }
 
-Vecteur Univers::calculerVecteurDirection(Particule& particule1, Particule& particule2){
-    Vecteur& pos1 = particule1.getPosition();
-    Vecteur& pos2 = particule2.getPosition();
+Vecteur<double> Univers::calculerVecteurDirection(Particule* particule1, Particule* particule2){
+    const Vecteur<double>& pos1 = particule1->getPosition();
+    const Vecteur<double>& pos2 = particule2->getPosition();
 
     double dx = pos2.getX() - pos1.getX();
     double dy = pos2.getY() - pos1.getY();
@@ -139,7 +146,7 @@ Vecteur Univers::calculerVecteurDirection(Particule& particule1, Particule& part
 
     /* Corriger la direction s'il y 
     a une périodicité aux limites */
-    if(conditionLimite == 3){
+    if(conditionLimite == ConditionLimite::Periodique){
         if(std::abs(dx) > ld.getX() / 2){
             dx -= std::copysign(ld.getX(), dx);
         }
@@ -151,35 +158,41 @@ Vecteur Univers::calculerVecteurDirection(Particule& particule1, Particule& part
         }
     }
 
-    return Vecteur(dx, dy, dz);
+    return Vecteur<double>(dx, dy, dz);
 }
 
-void Univers::deplacerParticule(Particule& particule, Vecteur&& vec){
+void Univers::deplacerParticule(Particule* particule, Vecteur<double>&& vec){
     
     /* Déplacer la particule */
-    particule.deplacer(std::move(vec));
+    particule->deplacer(std::move(vec));
 
     /* Corriger la position s'il y a périodicité */
-    if(conditionLimite == 3){
-        Vecteur &position = particule.getPosition();
+    if(conditionLimite == ConditionLimite::Periodique){
+        const Vecteur<double> &position = particule->getPosition();
 
-        if(position.getX() < 0){
-            position.setX(ld.getX() + position.getX()); 
-        }else if(position.getX() >= ld.getX()){
-            position.setX(position.getX() - ld.getX());
+        double posX = position.getX();
+        double posY = position.getY();
+        double posZ = position.getZ();
+
+        if(posX < 0){
+            posX = ld.getX() + posX; 
+        }else if(posX >= ld.getX()){
+            posX = posX - ld.getX();
         }
 
-        if(position.getY() < 0){
-            position.setY(ld.getY() + position.getY()); 
-        }else if(position.getY() >= ld.getY()){
-            position.setY(position.getY() - ld.getY());
+        if(posY < 0){
+            posY = ld.getY() + posY;
+        }else if(posY >= ld.getY()){
+            posY = posY - ld.getY();
         }
 
-        if(position.getZ() < 0){
-            position.setZ(ld.getZ() + position.getZ()); 
-        }else if(position.getZ() >= ld.getZ()){
-            position.setZ(position.getZ() - ld.getZ());
+        if(posZ < 0){
+            posZ = ld.getZ() + posZ;
+        }else if(posZ >= ld.getZ()){
+            posZ = posZ - ld.getZ();
         }
+
+        particule->setPosition(Vecteur<double>(posX, posY, posZ));
 
     }
 
@@ -189,7 +202,7 @@ void Univers::remplirCellules(){
     for(auto& particule : particules){
 
         /* Calculer les indices de la cellule */
-        Vecteur& position = particule.getPosition();
+        const Vecteur<double>& position = particule.getPosition();
         int x = floor(position.getX() / rCut);
         int y = floor(position.getY() / rCut);
         int z = floor(position.getZ() / rCut);
@@ -217,7 +230,7 @@ void Univers::corrigerCellules(){
             }
 
             /* Calculer les indices auxquels appartient la cellule */
-            Vecteur& position = particule.getPosition();
+            const Vecteur<double>& position = particule.getPosition();
             int x = floor(position.getX() / rCut);
             int y = floor(position.getY() / rCut);
             int z = floor(position.getZ() / rCut);
@@ -238,23 +251,18 @@ void Univers::corrigerCellules(){
             }
 
             /* Supprimer la particule de la cellule actuelle */
-            it = particulesCellule.erase(it);
-
+            it = cellule.suprimerParticule(it);
         }
     }
 }
 
 /* Getters */
 
-std::vector<Cellule>& Univers::getGrille(){
+const std::vector<Cellule>& Univers::getGrille() const{
     return grille;
 }
 
-std::vector<Particule>& Univers::getParticules(){
-    return particules;
-}
-
-const Vecteur& Univers::getLd() const{
+const Vecteur<double>& Univers::getLd() const{
     return ld;
 }
 
@@ -270,6 +278,6 @@ int Univers::getNombreParticules() const{
     return nombreParticules;
 }
 
-int Univers::getConditionLimite() const{
+ConditionLimite Univers::getConditionLimite() const{
     return conditionLimite;
 }

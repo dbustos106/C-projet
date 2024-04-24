@@ -1,11 +1,11 @@
 #pragma once
 
 #include <sstream>
-#include <fstream>
 #include "univers.hxx"
+#include "fichier.hxx"
 
 /**
-* @brief La fonction qui crée et charge des particules dans
+* @brief Fonction qui crée et charge des particules dans
 *        l'univers à partir des informations lues dans un fichier VTU.
 * @param[in] adresseFichier est l'adresse du fichier d'entrée.
 * @param[in] univers est l'univers.

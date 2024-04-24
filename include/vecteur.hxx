@@ -7,13 +7,14 @@
 * @brief Classe représentant un vecteur dans l'espace tridimensionnel.
 */
 
+template <typename T = double>
 class Vecteur{
 
     private:
         
-        double x, /**< Composante sur l'axe X du vecteur. */
-               y, /**< Composante sur l'axe Y du vecteur. */
-               z; /**< Composante sur l'axe Z du vecteur. */
+        T x, /**< Composante sur l'axe X du vecteur. */
+          y, /**< Composante sur l'axe Y du vecteur. */
+          z; /**< Composante sur l'axe Z du vecteur. */
 
     public: 
 
@@ -23,7 +24,7 @@ class Vecteur{
         * @brief Constructeur par défaut. Initialise le vecteur avec les composantes (0, 0, 0).
         */
         
-        Vecteur() : x(0), y(0), z(0) {};
+        Vecteur<T>();
 
         /**
         * @brief Constructeur permettant de spécifier les composantes du vecteur.
@@ -32,7 +33,7 @@ class Vecteur{
         * @param z Composante sur l'axe Z du vecteur.
         */
 
-        Vecteur(double x, double y, double z) : x(x), y(y), z(z) {}
+        Vecteur<T>(T x, T y, T z);
 
         /* Méthodes publiques */
 
@@ -42,7 +43,7 @@ class Vecteur{
         * @return La distance entre les deux vecteurs.
         */
         
-        double distance(const Vecteur &autre) const;
+        double distance(const Vecteur<T> &autre) const;
         
         /**
         * @brief Fonction qui calcule la norme de ce vecteur.
@@ -58,21 +59,21 @@ class Vecteur{
         * @return La composante X du vecteur.
         */
         
-        double getX() const;
+        T getX() const;
         
         /**
         * @brief Fonction qui obtient la composante Y du vecteur.
         * @return La composante Y du vecteur.
         */
         
-        double getY() const;
+        T getY() const;
         
         /**
         * @brief Fonction qui obtient la composante Z du vecteur.
         * @return La composante Z du vecteur.
         */
         
-        double getZ() const;
+        T getZ() const;
 
         /* Setters */
 
@@ -81,21 +82,21 @@ class Vecteur{
         * @param newX est la nouvelle valeur pour la composante X.
         */
         
-        void setX(double newX);
+        void setX(T newX);
         
         /**
         * @brief Fonction qui définit la composante Y du vecteur.
         * @param newX est la nouvelle valeur pour la composante Y.
         */
         
-        void setY(double newY);
+        void setY(T newY);
         
         /**
         * @brief Fonction qui définit la composante Z du vecteur.
         * @param newX est la nouvelle valeur pour la composante Z.
         */
         
-        void setZ(double newZ);
+        void setZ(T newZ);
 
         /* Surcharge interne des operateurs */
 
@@ -105,7 +106,7 @@ class Vecteur{
         * @return Vrai si les vecteurs sont égaux, faux sinon.
         */
 
-        bool operator==(Vecteur&& autre) const;
+        bool operator==(Vecteur<T>&& autre) const;
         
         /**
         * @brief Surcharge interne de l'opérateur d'égalité.
@@ -113,7 +114,7 @@ class Vecteur{
         * @return Vrai si les vecteurs sont égaux, faux sinon.
         */
 
-        bool operator==(const Vecteur& autre) const;
+        bool operator==(const Vecteur<T>& autre) const;
         
         /**
         * @brief Surcharge de l'opérateur d'addition et d'affectation.
@@ -121,7 +122,7 @@ class Vecteur{
         * @return Une référence à ce vecteur après l'opération.
         */
 
-        Vecteur& operator+=(const Vecteur& autre);
+        Vecteur<T> &operator+=(const Vecteur<T>& autre);
         
         /**
         * @brief Surcharge de l'opérateur de soustraction et d'affectation.
@@ -129,7 +130,7 @@ class Vecteur{
         * @return Une référence à ce vecteur après l'opération.
         */
         
-        Vecteur& operator-=(const Vecteur& autre);
+        Vecteur<T> &operator-=(const Vecteur<T>& autre);
 
         /* Surcharge d'opérateurs amis */
 
@@ -140,8 +141,9 @@ class Vecteur{
         * @return Une référence au flux de sortie.
         */
 
-        friend std::ostream& operator<<(std::ostream& os, const Vecteur& vec);
-                
+        template <typename U>
+        friend std::ostream& operator<<(std::ostream& os, const Vecteur<U>& vec);
+
 };
 
 /* Surcharge externe des operateurs */
@@ -153,7 +155,8 @@ class Vecteur{
 * @return Le résultat de l'addition des deux vecteurs.
 */
 
-Vecteur operator+(const Vecteur& vec1, const Vecteur& vec2);
+template <typename T>
+Vecteur<T> operator+(const Vecteur<T>& vec1, const Vecteur<T>& vec2);
 
 /**
 * @brief Surcharge de l'opérateur de soustraction pour soustraire deux vecteurs.
@@ -162,7 +165,8 @@ Vecteur operator+(const Vecteur& vec1, const Vecteur& vec2);
 * @return Le résultat de la soustraction des deux vecteurs.
 */
 
-Vecteur operator-(const Vecteur& vec1, const Vecteur& vec2);
+template <typename T>
+Vecteur<T> operator-(const Vecteur<T>& vec1, const Vecteur<T>& vec2);
 
 /**
 * @brief Surcharge de l'opérateur de multiplication par un scalaire pour multiplier un vecteur par un scalaire.
@@ -171,7 +175,8 @@ Vecteur operator-(const Vecteur& vec1, const Vecteur& vec2);
 * @return Le résultat de la multiplication du vecteur par le scalaire.
 */
 
-Vecteur operator*(const Vecteur& vec, double scalaire);
+template <typename T>
+Vecteur<T> operator*(const Vecteur<T>& vec, double scalaire);
 
 /**
 * @brief Surcharge de l'opérateur de multiplication par un scalaire pour multiplier un vecteur par un scalaire.
@@ -180,7 +185,8 @@ Vecteur operator*(const Vecteur& vec, double scalaire);
 * @return Le résultat de la multiplication du vecteur par le scalaire.
 */
 
-Vecteur operator*(double scalaire, const Vecteur& vec);
+template <typename T>
+Vecteur<T> operator*(double scalaire, const Vecteur<T>& vec);
 
 /**
 * @brief Surcharge de l'opérateur de division pour diviser un vecteur par un scalaire.
@@ -189,4 +195,7 @@ Vecteur operator*(double scalaire, const Vecteur& vec);
 * @return Le résultat de la division du vecteur par le scalaire.
 */
 
-Vecteur operator/(const Vecteur& vec, double scalaire);
+template <typename T>
+Vecteur<T> operator/(const Vecteur<T>& vec, double scalaire);
+
+#include "vecteur.txx"

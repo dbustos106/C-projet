@@ -1,23 +1,8 @@
 #pragma once
 
 #include <string>
-#include <fstream>
-#include <sys/stat.h>
 #include "univers.hxx"
-
-/**
-* @brief Fonction qui crée un nouveau répertoire s'il n'existe pas.
-* @param nomDossier est le nom du répertoire à créer.
-*/
-
-void creerDossier(std::string& nomDossier);
-
-/**
-* @brief Fonction qui ouvre un fichier à une adresse donnée.
-* @param[in] AdresseFichier est l'adresse du fichier.
-*/
-
-std::ofstream ouvrirFichier(std::string&& adresseFichier);
+#include "fichier.hxx"
 
 /**
 * @brief Fonction qui sauvegarde l'état de l'univers dans un fichier texte.
@@ -26,7 +11,7 @@ std::ofstream ouvrirFichier(std::string&& adresseFichier);
 * @param[in] i est le numéro de l'itération.
 */
 
-void sauvegarderEtatEnTexte(std::ofstream& fichierTexte, Univers& univers, int i);
+void sauvegarderEtatEnTexte(std::ofstream& fichierTexte, const Univers& univers, int i);
 
 /**
 * @brief Fonction qui sauvegarde l’état de l’univers dans un fichier VTU.
@@ -35,4 +20,4 @@ void sauvegarderEtatEnTexte(std::ofstream& fichierTexte, Univers& univers, int i
 * @param[in] i est le numéro de l'itération.
 */
 
-void sauvegarderEtatEnVTU(std::string& nomDossier, Univers& univers, int i);
+void sauvegarderEtatEnVTU(const std::string& nomDossier, const Univers& univers, int i);

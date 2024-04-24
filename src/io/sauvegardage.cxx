@@ -1,37 +1,18 @@
 #include "sauvegardage.hxx"
 
-void creerDossier(std::string& nomDossier){
-    struct stat info;
-    if(stat(nomDossier.c_str(), &info) != 0){
-        if(mkdir(nomDossier.c_str(), 0777) != 0){
-            std::cerr << "Erreur lors de la création du dossier.";
-            exit(0);
-        }
-    }
-}
-
-std::ofstream ouvrirFichier(std::string&& adresseFichier){
-    std::ofstream fichier(adresseFichier);
-    if(!fichier.is_open()){
-        throw std::runtime_error("Erreur lors de l'overture du fichier de sortie.");
-    }
-    return fichier;
-}
-
-void sauvegarderEtatEnTexte(std::ofstream& fichierTexte, Univers& univers, int i){
+void sauvegarderEtatEnTexte(std::ofstream& fichierTexte, const Univers& univers, int i){
     fichierTexte << "Iteration " << std::to_string(i) << " : ";
-    for(auto& cellule : univers.getGrille()){
-        for(const auto& particulePtr : cellule.getParticules()){
-            Particule& particule = *particulePtr;
-            fichierTexte << particule << " ";
+    for(const auto& cellule : univers.getGrille()){
+        for(auto particule : cellule.getParticules()){
+            fichierTexte << *particule << " ";
         }
     }
 }
 
-void sauvegarderEtatEnVTU(std::string& nomDossier, Univers& univers, int i){
+void sauvegarderEtatEnVTU(const std::string& nomDossier, const Univers& univers, int i){
 
-    const Vecteur& ld = univers.getLd();
-    std::ofstream fichierVTU = ouvrirFichier(nomDossier + "/Iteration." + std::to_string(i) + ".vtu");
+    const Vecteur<double>& ld = univers.getLd();
+    std::ofstream fichierVTU = ouvrirFichierDeSortie(nomDossier + "/Iteration." + std::to_string(i) + ".vtu");
 
     fichierVTU << "<VTKFile type=\"UnstructuredGrid\" version=\"0.1\" byte_order=\"BigEndian\">\n";
     fichierVTU << "  <UnstructuredGrid>\n";
@@ -41,10 +22,9 @@ void sauvegarderEtatEnVTU(std::string& nomDossier, Univers& univers, int i){
     fichierVTU << "          ";
 
     /* Sauvegarder les positions */
-    for(auto& cellule : univers.getGrille()){
-        for(const auto& particulePtr : cellule.getParticules()){
-            Particule& particule = *particulePtr;
-            Vecteur& position = particule.getPosition();
+    for(const auto& cellule : univers.getGrille()){
+        for(auto particule : cellule.getParticules()){
+            const Vecteur<double>& position = particule->getPosition();
             fichierVTU << position.getX() - ld.getX()/2 << " ";
             fichierVTU << position.getY() - ld.getY()/2 << " ";
             fichierVTU << position.getZ() - ld.getZ()/2 << " ";
@@ -59,10 +39,9 @@ void sauvegarderEtatEnVTU(std::string& nomDossier, Univers& univers, int i){
     fichierVTU << "          ";
 
     /* Sauvegarder les vitesses */
-    for(auto& cellule : univers.getGrille()){
-        for(const auto& particulePtr : cellule.getParticules()){
-            Particule& particule = *particulePtr;
-            Vecteur& vitesse = particule.getVitesse();
+    for(const auto& cellule : univers.getGrille()){
+        for(auto particule : cellule.getParticules()){
+            const Vecteur<double>& vitesse = particule->getVitesse();
             fichierVTU << vitesse.getX() << " ";
             fichierVTU << vitesse.getY() << " ";
             fichierVTU << vitesse.getZ() << " ";
@@ -75,10 +54,9 @@ void sauvegarderEtatEnVTU(std::string& nomDossier, Univers& univers, int i){
     fichierVTU << "          ";
 
     /* Sauvegarder les masses */
-    for(auto& cellule : univers.getGrille()){
-        for(const auto& particulePtr : cellule.getParticules()){
-            Particule& particule = *particulePtr;
-            fichierVTU << particule.getMasse() << " ";
+    for(const auto& cellule : univers.getGrille()){
+        for(auto particule : cellule.getParticules()){
+            fichierVTU << particule->getMasse() << " ";
         }
     }
     fichierVTU << "\n";

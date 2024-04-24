@@ -39,8 +39,10 @@ void mesurerPerformance(){
 void mesurerPerformanceInsertionUnivers(int nombreParticules){
     auto start = std::chrono::steady_clock::now();
 
-    Vecteur ld(250, 40, 0);
-    Univers univers(ld, 2.5, 2, 1);
+    Configuration& configuration = Configuration::getInstance();
+    configuration.setLd(200, 130, 0);
+
+    Univers univers;
     univers.ajouterParticulesAleatoires(nombreParticules);
 
     auto end = std::chrono::steady_clock::now();
