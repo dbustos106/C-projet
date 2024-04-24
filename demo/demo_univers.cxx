@@ -2,57 +2,57 @@
 * @mainpage Demo univers
 *
 * Voici la documentation de Demo Univers.
-* Demo Univers est un programme conçu pour simuler le mouvement de
-* particules dans un univers. Il existe 3 types de forces qui peuvent 
-* affecter une particule : la force d'interaction du potentiel de 
-* Lennard-Jones, la force d'interaction gravitationnelle et la
-* force du potentiel gravitationnel.
 *
-* De plus, il existe 3 types de conditions limites :
+* Ce programme a deux modes :\n\n";
+* 1. Mode de simulation de particules : C'est le mode principal du programme, qui consiste 
+*    en la simulation d'un univers de particules interagissant sous l'influence de diverses
+*    forces physiques. Ces forces peuvent inclure l'interaction gravitationnelle, le potentiel
+*    de Lennard-Jones et le potenciel gravitationnel; 
+* 2. Mode de mesure des performances : C'est un mode secondaire dans lequel les performances 
+*    des collections standard de C++ sont évaluées pour différentes tailles de données. 
+*    De plus, il mesure le temps nécessaire à la création d'un univers de différentes 
+*    tailles de particules.
 *
-* 1. Réflexion : Les particules subissent une force de réflexion 
-*                lorsqu'elles se rapprochent à une distance inférieure
-*                à rCutReflexion de l'une des limites de l'univers.
-* 2. Absorption : Les particules disparaissent lorsqu'elles atteignent
-*                 les limites de l'univers.
+* Dans le mode de simulation, il existe 3 types de conditions limites :
+*
+* 1. Réflexion : Les particules subissent une force de réflexion lorsqu'elles se rapprochent
+*                à une distance inférieure à rCutReflexion de l'une des limites de l'univers.
+* 2. Absorption : Les particules disparaissent lorsqu'elles atteignent les limites de l'univers.
 * 3. Périodique : Les particules se déplacent dans un univers périodique.
 *
-* D'autre part, pour simplifier les calculs, les forces d'interaction ne 
-* sont calculées que si la distance entre les particules est inférieure à
-* rCut. Ainsi, seules les particules qui contribuent à une attraction 
-* significative sont prises en compte.
+* D'autre part, pour simplifier les calculs, les forces d'interaction ne sont calculées que si
+* la distance entre les particules est inférieure à rCut. Ainsi, seules les particules qui 
+* contribuent à une attraction significative sont prises en compte.
 *
 * ## Utilisation du programme 
-*
-* Le programme peut être exécuté avec les options suivantes. Si une 
-* valeur n'est pas fournie, les valeurs par défaut sont utilisées :
 * 
-* - `-h, --help` : Afficher ce message d'aide.
-* - `-v, --version` : Afficher les informations de version.
-* - `--ldX <valeur>` (valeur par défaut : 0) : Définir la longueur en X.
-* - `--ldY <valeur>` (valeur par défaut : 0) : Définir la longueur en Y.
-* - `--ldZ <valeur>` (valeur par défaut : 0) : Définir la longueur en Z.
-* - `--rCut <valeur>` (valeur par défaut : 2.5) : Définir la distance de coupure.
-* - `--conditionLimite <valeur>` (valeur par défaut : 2) : Définir la condition limite.
-* - `--rCutReflexion <valeur>` (valeur par défaut : 2^(1/6)) : Définir la distance de coupure pour la réflexion.
-* - `--limiterVitesse` (valeur par défaut : faux) : Limiter la vitesse.
-* - `--energieDesiree <valeur>` (valeur par défaut : 0.005) : Définir l'énergie désirée.
-* - `--forceLJ` (valeur par défaut : faux) : Utiliser la force de Lennard-Jones.
-* - `--forceIG` (valeur par défaut : faux) : Utiliser la force gravitationnelle.
-* - `--forcePG` (valeur par défaut : faux) : Utiliser le potentiel gravitationnel.
-* - `--epsilon <valeur>` (valeur par défaut : 5.0) : Définir la valeur d'epsilon.
-* - `--sigma <valeur>` (valeur par défaut : 1.0) : Définir la valeur de sigma.
-* - `--G <valeur>` (valeur par défaut : -12) : Définir la valeur de G.
-* - `--delta <valeur>` (valeur par défaut : 0.00005) : Définir la valeur de delta.
-* - `--tFinal <valeur>` (valeur par défaut : 19.5) : Définir la valeur de tFinal.
-* - `--adresseFichier <valeur>` : Définir l'adresse du fichier d'entrée. 
+* Les différentes variables de configuration, avec lesquelles le programme peut être exécuté,
+* doivent être spécifiées dans le fichier "configuracion" du dossier demo. Si l'une des variables
+* est omise, le programme prendra la valeur par défaut spécifiée ci-dessous:
 *
-* Si aucune variable n'est fournie, le programme exécutera les tests de performance
-* sur les différents types de collections et mesurera le temps pour différentes tailles de données.
+* - ADRESSE_FICHIER = Définit l'adresse du fichier vtu à partir duquel les particules d'entrée seront lues.
+* - FORCE_LJ = OUI pour activer la force du potentiel de Lennard-Jones (défaut : NON)
+* - FORCE_IG = OUI pour activer la force d'interaction gravitationnelle (défaut : NON)
+* - FORCE_PG = OUI pour activer la force du potentiel gravitationnel (défaut : NON)
+* - LD_X = Définit la longueur caractéristique de l'axe X (défaut : 0)
+* - LD_Y = Définit la longueur caractéristique de l'axe Y (défaut : 0)
+* - LD_Z = Définit la longueur caractéristique de l'axe Z (défaut : 0)
+* - R_CUT = Définit le rayon de coupure pour la construction de la grille (défaut : 2.5)\n";
+* - CONDITION_LIMITE = Définit le traitement au bord de l'univers. 'Reflexion', 'Absorption' ou 'Periodique' (défaut : Absorption)
+* - LIMITER_VITESSE = OUI pour activer la limitation d'énergie (défaut : NON)
+* - ENERGIE_DESIREE = En cas de limitation d'énergie, définit l'énergie desirée du système (défaut : 0.005)
+* - EPSILON = Définit la valeur d'epsilon (défaut : 5.0)
+* - SIGMA = Définit la valeur de sigma (défaut : 1.0)
+* - G = Définit la valeur de G (défaut : -12)
+* - DELTA = Définit la valeur de delta avec laquelle le temps est incrémenté dans la simulation (défaut : 0.00005)
+* - T_FINAL = Définit le temps de fin de la simulation (défaut : 19.5)
 *
 * ## Exemple d'utilisation :
 * 
-* `./demo_univers --ldX 250 --ldY 130 --forceLJ --adresseFichier lecture.vtu`
+* `ADRESSE_FICHIER  = colision1.vtu`
+* `FORCE_LJ         = OUI`
+* `LD_X             = 250`
+* `LD_Y             = 130`
 * 
 * Cela initialisera la simulation avec un univers de dimensions (250 x 130), 
 * avec une distance de coupure de 2,5 et une condition limite de type absorbant. 
@@ -92,15 +92,15 @@ void afficherLogo(){
 }
 
 void afficherDebut(){
-    std::cout << "Ce programme a deux modes principaux :\n\n";
-    std::cout << "1. Mode de mesure des performances : Dans ce mode, le programme évalue les performances\n"
-              << "   des collections standard de C++ pour différentes tailles de données. De plus, il mesure\n" 
-              << "   le temps nécessaire à la création d'un univers de différentes tailles de particules.\n\n";
-
-    std::cout << "2. Mode de simulation de particules : Dans ce mode, le programme simule un univers de\n"
-              << "   particules interagissant sous l'influence de diverses forces physiques. Ces forces\n"
-              << "   peuvent inclure l'interaction gravitationnelle, le potentiel de Lennard-Jones et le\n" 
-              << "   potenciel gravitationnel.\n\n";   
+    std::cout << "Ce programme a deux modes :\n\n";
+    std::cout << "1. Mode de simulation de particules : C'est le mode principal du programme, qui consiste\n"
+              << "   en la simulation d'un univers de particules interagissant sous l'influence de diverses\n"
+              << "   forces physiques. Ces forces peuvent inclure l'interaction gravitationnelle, le potentiel\n"
+              << "   de Lennard-Jones et le potenciel gravitationnel.\n";
+    std::cout << "2. Mode de mesure des performances : C'est un mode secondaire dans lequel les performances\n" 
+              << "   des collections standard de C++ sont évaluées pour différentes tailles de données.\n"
+              << "   De plus, il mesure le temps nécessaire à la création d'un univers de différentes\n"
+              << "   tailles de particules.\n\n";
 
     std::cout << "Veuillez saisir: \n\n"
               << " 1 pour le mode de mesure des performances\n"
@@ -132,20 +132,17 @@ int main(int argc, char *argv[]){
         Configuration& configuration = Configuration::getInstance();
 
         /* Afficher les paramètres et demander confirmation */
-        configuration.afficherParametres();
+        configuration.afficherParametresPossibles();
 
-        /* Lire le fichier de configuration et analyser les options */
+        /* Lire le fichier de configuration et afficher les les paramètres choisis */
         configuration.lireFichierConfiguration();
-        configuration.parserParametres();
         configuration.afficherParametresChoisis();
 
         /* Mesurer le temps de début de la simulation */
         auto start = std::chrono::steady_clock::now();
 
-        /* Créer un univers et lire le fichier d'entrée */
+        /* Créer un univers et lire le fichier .vtu d'entrée */
         Univers univers;
-
-        /* lire les particules du fichier vtu */
         lectureDuFichier(configuration.getAdresseFichier(), univers);
     
         /* Créer la simulation et démarrer l'algorithme de Stromer-Verlet */

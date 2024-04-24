@@ -9,7 +9,7 @@
 enum class ConditionLimite{ Reflexion, Absorption, Periodique };
 
 /**
-* @brief Classe représentant la configuration avec laquelle le programme sera exécuté. 
+* @brief Classe représentant la configuration avec laquelle la simulation sera exécuté. 
 */
 
 class Configuration{
@@ -40,305 +40,212 @@ class Configuration{
         std::string adresseFichier; /**< Définit le nom du fichier de lecture VTU. */
         std::string nomDossier; /**< Définit le nom du dossier dans lequel sont sauvegardés les fichiers de sortie. */
 
-        Configuration(){};
+        /**
+        * @brief Constructeur privé par défaut de la classe Configuration.
+        */
+
+        Configuration(){}; 
+
+        /**
+        * @brief Constructeur de copie supprimé pour éviter la copie d'instances.
+        * @param autre Instance de Configuration à partir de laquelle copier.
+        */
+
         Configuration(Configuration const& autre) = delete;
+        
+        /**
+        * @brief Constructeur de déplacement supprimé pour éviter le transfert d'instances.
+        * @param autre Instance de Configuration à partir de laquelle déplacer.
+        */
+        
         Configuration(Configuration&& autre) = delete;
+        
+        /**
+        * @brief Opérateur d'assignation supprimé pour éviter l'assignation d'instances.
+        * @param autre Instance de Configuration à partir de laquelle assigner.
+        */
+        
         void operator=(Configuration const&) = delete;
 
     public:
 
+        /* Méthodes publiques */
+
         /**
         * @brief Fonction statique pour accéder à l'unique instance de Configuration.
         */
-        static Configuration& getInstance(){
-            static Configuration instance;
-            return instance;
-        }
+
+        static Configuration& getInstance();
 
         /**
-        * @brief Fonction qui lit les options fournies par l'utilisateur et les stocke.
+        * @brief Fonction qui lit les paramètres fournis par l'utilisateur
+        *        dans le fichier de configuration.
         */
 
-        void lireFichierConfiguration(){
-
-            /* Ouvrir le fichier de configuration */
-            std::ifstream configuration = ouvrirFichierDEntree("configuration.conf");
-
-            std::string line;
-            while(std::getline(configuration, line)){
-                
-                /* Supprimer les commentaires s'ils existent */
-                size_t commentPos = line.find("//");
-                if(commentPos != std::string::npos){
-                    line = line.substr(0, commentPos);
-                } 
-
-                /* Continuer si la ligne est vide */
-                if(line.find_first_not_of(" \t\r\n") == std::string::npos){
-                    continue;
-                }
-                    
-                /* Séparer la ligne en clé et valeur */
-                std::string key, value;
-                std::istringstream iss(line);
-                if(!(std::getline(iss, key, '=') && std::getline(iss, value))){
-                    std::cout << key << "DD\n";
-                    std::cerr << "Erreur de format dans le fichier de configuration. \n";
-                    exit(0);
-                }
-
-                /* Supprimer les espaces autour de la clé et de la valeur */
-                key.erase(0, key.find_first_not_of(" \t\r\n"));
-                key.erase(key.find_last_not_of(" \t\r\n") + 1);
-                value.erase(0, value.find_first_not_of(" \t\r\n"));
-                value.erase(value.find_last_not_of(" \t\r\n") + 1);
-
-                /* Continuer si value est vide */
-                if(value.empty()){
-                    continue;
-                }
-
-                if(key == "FORCE_LJ"){
-                    forceLJ = (value == "OUI");
-                }else if(key == "FORCE_IG"){
-                    forceIG = (value == "OUI");
-                }else if(key == "FORCE_PG"){
-                    forcePG = (value == "OUI");
-                }else if(key == "LD_X"){
-                    ldX = std::stod(value);
-                }else if(key == "LD_Y"){
-                    ldY = std::stod(value);
-                }else if(key == "LD_Z"){
-                    ldZ = std::stod(value);
-                }else if(key == "R_CUT"){
-                    rCut = std::stod(value);
-                }else if(key == "R_CUT_REFLEXION"){
-                    rCutReflexion = std::stod(value);
-                }else if(key == "LIMITER_VITESSE"){
-                    limiterVitesse = (value == "OUI");
-                }else if(key == "ENERGIE_DESIREE"){
-                    energieDesiree = std::stod(value);
-                }else if(key == "EPSILON"){
-                    epsilon = std::stod(value);
-                }else if(key == "SIGMA"){
-                    sigma = std::stod(value);
-                }else if(key == "G"){
-                    G = std::stod(value);
-                }else if(key == "DELTA"){
-                    delta = std::stod(value);
-                }else if(key == "T_FINAL"){
-                    tFinal = std::stod(value);
-                }else if(key == "ADRESSE_FICHIER"){
-                    adresseFichier = value;
-                }else if(key == "CONDITION_LIMITE"){
-                    if(value == "Absorption"){
-                        conditionLimite = ConditionLimite::Absorption;
-                    }else if(value == "Reflexion"){
-                        conditionLimite = ConditionLimite::Reflexion;
-                    }else if(value == "Periodique"){
-                        conditionLimite = ConditionLimite::Periodique;
-                    }else{
-                        std::cerr << "Valeur de condition limite non valide: " << value << "\n";
-                        exit(0);
-                    }
-                }else{
-                    std::cerr << "Erreur : option inconnue '" << key << "'\n";
-                    exit(0);
-                }
-            }
-
-            configuration.close();
-        }
+        void lireFichierConfiguration();
 
         /**
-        * @brief Fonction qui vérifie les options fournies par l'utilisateur.
+        * @brief Fonction qui affiche sur la console les paramètres choisis
+        *        avec lesquels la simulation sera exécutée.
         */
 
-        void parserParametres(){
-    
-            /* Si l'adresse du fichier d'entrée n'est pas fournie, demandez-la */
-            if(adresseFichier.empty()){
-                std::cout << "Attention : Le fichier d'entrée n'a pas été saisi\n"; 
-                exit(0);
-            }
-
-            /* Vérifier le format du fichier d'entrée */
-            size_t positionExtension = adresseFichier.find_last_of(".");
-            if(positionExtension == std::string::npos || adresseFichier.substr(positionExtension) != ".vtu"){
-                std::cerr << "Attention : Extension de fichier différente de .vtu\n";
-                exit(0);
-            }
-
-            /* Prendre le nom du fichier d'entrée comme nom pour le dossier de sortie */
-            std::string nomFichier = adresseFichier.substr(0, positionExtension);
-            size_t PositionDernierSlash = nomFichier.find_last_of("/\\");
-            if(PositionDernierSlash != std::string::npos){
-                nomFichier = nomFichier.substr(PositionDernierSlash + 1);
-            }
-            nomDossier = nomFichier;
-
-        }
+        void afficherParametresChoisis();
 
         /**
-        * @brief .
+        * @brief Fonction qui affiche sur la console la variété de paramètres
+        *        que l'utilisateur peut définir dans le fichier de configuration.
         */
 
-        void afficherParametresChoisis(){
-            std::cout << "\nLes paramètres de simulation choisis sont:\n"
-                      << "\tLongueur en X : " << ldX << "\n"
-                      << "\tLongueur en Y : " << ldY << "\n"
-                      << "\tLongueur en Z : " << ldZ << "\n"
-                      << "\tDistance de coupure : " << rCut << "\n";
-
-            std::cout << "\tCondition limite : ";
-            switch(conditionLimite){
-                case ConditionLimite::Absorption:
-                    std::cout << "Absorption\n";
-                    break;
-                case ConditionLimite::Reflexion:
-                    std::cout << "Reflexion\n";
-                    break;
-                case ConditionLimite::Periodique:
-                    std::cout << "Periodique\n";
-                    break;
-            }
-
-            if(conditionLimite == ConditionLimite::Reflexion){
-                std::cout << "\tDistance de coupure pour la réflexion : " << rCutReflexion << "\n";
-            }
-
-            std::cout << "\tLimiter la vitesse : " << (limiterVitesse ? "oui" : "non") << "\n";
-            if(limiterVitesse){
-                std::cout << "\tÉnergie désirée : " << energieDesiree << "\n";
-            }
-
-            std::cout << "\tForce de Lennard-Jones : " << (forceLJ ? "activée" : "désactivée") << "\n"
-                      << "\tForce gravitationnelle : " << (forceIG ? "activée" : "désactivée") << "\n"
-                      << "\tPotentiel gravitationnel : " << (forcePG ? "activé" : "désactivé") << "\n";
-
-            if(forceLJ || forceIG){
-                std::cout << "\tEpsilon : " << epsilon << "\n" << "\tSigma : " << sigma << "\n";
-            }
-
-            if(forcePG){
-                std::cout << "\tG : " << G << "\n";
-            }
-
-            std::cout << "\tDelta : " << delta << "\n" << "\ttFinal : " << tFinal << "\n\n";
-        }
-
-        void afficherParametres(){
-            std::cout << "\nLes différentes variables de configuration doivent être spécifiées dans le fichier\n" 
-                      << "\"configuracion\" du dossier demo. Si l'une des variables est omise, le programme prendra\n" 
-                      << "la valeur par défaut spécifiée ci-dessous.\n\n";
-            std::cout << " - ADRESSE_FICHIER = Définit l'adresse du fichier vtu à partir duquel les particules d'entrée seront lues.\n";
-            std::cout << " - FORCE_LJ = OUI pour activer la force du potentiel de Lennard-Jones (défaut : NON)\n";
-            std::cout << " - FORCE_IG = OUI pour activer la force d'interaction gravitationnelle (défaut : NON)\n";
-            std::cout << " - FORCE_PG = OUI pour activer la force du potentiel gravitationnel (défaut : NON)\n";
-            std::cout << " - LD_X = Définit la longueur caractéristique de l'axe X (défaut : 0)\n";
-            std::cout << " - LD_Y = Définit la longueur caractéristique de l'axe Y (défaut : 0)\n";
-            std::cout << " - LD_Z = Définit la longueur caractéristique de l'axe Z (défaut : 0)\n";
-            std::cout << " - R_CUT = Définit le rayon de coupure pour la construction de la grille (défaut : 2.5)\n";
-            std::cout << " - CONDITION_LIMITE = Définit le traitement au bord de l'univers. 'Reflexion', 'Absorption' ou 'Periodique' (défaut : Absorption)\n";
-            std::cout << " - LIMITER_VITESSE = OUI pour activer la limitation d'énergie (défaut : NON)\n";
-            std::cout << " - ENERGIE_DESIREE = En cas de limitation d'énergie, définit l'énergie desirée du système (défaut : 0.005)\n";
-            std::cout << " - EPSILON = Définit la valeur d'epsilon (défaut : 5.0)\n";
-            std::cout << " - SIGMA = Définit la valeur de sigma (défaut : 1.0)\n";
-            std::cout << " - G = Définit la valeur de G (défaut : -12)\n";
-            std::cout << " - DELTA = Définit la valeur de delta avec laquelle le temps est incrémenté dans la simulation (défaut : 0.00005)\n";
-            std::cout << " - T_FINAL = Définit le temps de fin de la simulation (défaut : 19.5)\n\n";
-            std::cout << "Entrez la lettre (Y) pour confirmer la simulation. Toute autre entrée terminera l'exécution >> ";
-
-            std::string confirmation;
-            std::cin >> confirmation;
-
-            if(confirmation != "Y"){
-                exit(0);
-            }
-
-        }
+        void afficherParametresPossibles();
 
         /* getters */
 
-        bool getForceLJ() const{
-            return forceLJ; 
-        }
+        /**
+        * @brief Fonction qui indique si la force de Lennard-Jones sera utilisée
+        *        dans la simulation.
+        * @return True si la force de Lennard-Jones est utilisée, False sinon.
+        */
 
-        bool getForceIG() const{
-            return forceIG; 
-        }
+        bool getForceLJ() const;
 
-        bool getForcePG() const{
-            return forcePG; 
-        }
+        /**
+        * @brief Fonction qui indique si la force d'interaction gravitationnelle
+        *        sera utilisée dans la simulation.
+        * @return True si la force d'interaction gravitationnelle est utilisée, False sinon.
+        */
 
-        double getLdX() const{
-            return ldX; 
-        }
+        bool getForceIG() const;
 
-        double getLdY() const{
-            return ldY; 
-        }
+        /**
+        * @brief Fonction qui indique si la force du potenciel gravitationnel
+        *        sera utilisée dans la simulation.
+        * @return True si la force du potenciel gravitationnel est utilisée, False sinon.
+        */
 
-        double getLdZ() const{
-            return ldZ; 
-        }
+        bool getForcePG() const;
 
-        double getRCut() const{
-            return rCut; 
-        }
+        /**
+        * @brief Fonction qui obtient la longueur caractéristique sur l'axe X.
+        * @return Longueur caractéristique de l'axe X.
+        */
 
-        double getRCutReflexion() const{ 
-            return rCutReflexion; 
-        }
+        double getLdX() const;
 
-        const ConditionLimite& getConditionLimite() const{ 
-            return conditionLimite; 
-        }
+        /**
+        * @brief Fonction qui obtient la longueur caractéristique sur l'axe Y.
+        * @return Longueur caractéristique de l'axe Y.
+        */
 
+        double getLdY() const;
 
-        bool getLimiterVitesse() const{ 
-            return limiterVitesse; 
-        }
+        /**
+        * @brief Fonction qui obtient la longueur caractéristique sur l'axe Z.
+        * @return Longueur caractéristique de l'axe Z.
+        */
 
-        double getEnergieDesiree() const{ 
-            return energieDesiree; 
-        }
+        double getLdZ() const;
 
-        double getEpsilon() const{ 
-            return epsilon; 
-        }
+        /**
+        * @brief Fonction qui obtient le rayon de coupure pour les interactions attractives.
+        * @return Rayon de coupure pour les interactions attractives.
+        */
 
-        double getSigma() const{ 
-            return sigma; 
-        }
+        double getRCut() const;
 
-        double getG() const{ 
-            return G; 
-        }
+        /**
+        * @brief Fonction qui obtient le rayon de coupure pour les réflexions aux bords.
+        * @return Rayon de coupure pour les réflexions aux bords.
+        */
 
-        double getDelta() const{
-            return delta;
-        }
+        double getRCutReflexion() const;
 
-        double getTFinal() const{ 
-            return tFinal;
-        }
+        /**
+        * @brief Fonction qui obtient le type de condition limite appliqué aux
+        *        particules aux limites de l'univers.
+        * @return Type de condition limite appliqué.
+        */
 
-        const std::string& getAdresseFichier() const{ 
-            return adresseFichier;
-        }
+        const ConditionLimite& getConditionLimite() const;
 
-        const std::string& getNomDossier() const{ 
-            return nomDossier;
-        }
+        /**
+        * @brief Fonction qui indique si la limitation de vitesse sera appliquée
+        *        pour maintenir l'énergie cinétique du système.
+        * @return True si la vitesse sera limitée, False sinon.
+        */
 
+        bool getLimiterVitesse() const;
+
+        /**
+        * @brief Fonction qui indique l'énergie désirée en cas de limitation
+        *        de vitesse activée.
+        * @return Valeur de l'énergie désirée.
+        */
+
+        double getEnergieDesiree() const;
+
+        /**
+        * @brief Fonction qui obtient la valeur d'epsilon utilisée dans le
+        *        calcul des forces.
+        * @return Valeur d'epsilon.
+        */
+
+        double getEpsilon() const;
+
+        /**
+        * @brief Fonction qui obtient la valeur de sigma utilisée dans le
+        *        calcul des forces.
+        * @return Valeur d'sigma.
+        */
+
+        double getSigma() const;
+
+        /**
+        * @brief Fonction qui obtient la valeur de G utilisée dans le calcul
+        *        des forces.
+        * @return Valeur de G.
+        */
+
+        double getG() const;
+
+        /**
+        * @brief Function qui obtient la valeur delta par laquelle le temps de
+        *        simulation avance.
+        * @return Valeur de delta.
+        */
+
+        double getDelta() const;
+
+        /**
+        * @brief Fonction qui obtient la valeur finale du temps jusqu'à laquelle
+        *        la simulation sera exécutée.
+        * @return Valeur du temps final.
+        */
+
+        double getTFinal() const;
+
+        /**
+        * @brief Fonction qui obtient le chemin du fichier d'entrée où sont stockées
+        *        les particules à utiliser pour la simulation.
+        * @return Adresse du fichier d'entrée.
+        */
+
+        const std::string& getAdresseFichier() const;
+
+        /**
+        * @brief Fonction qui obtient le nom du dossier dans lequel 
+        *        seront stockés les documents de sortie de la simulation.
+        * @return Nom du dossier.
+        */
+
+        const std::string& getNomDossier() const;
+        
         /* Setters */
 
-        void setLd(double newLdX, double newLdY, double newLdZ){
-            ldX = newLdX;
-            ldY = newLdY;
-            ldZ = newLdZ;
-        }
+        /**
+        * @brief Fonction qui permet de modifier la configuration pour les 
+        *        longueurs caractéristiques de l'univers.
+        */
+
+        void setLd(double newLdX, double newLdY, double newLdZ);
 
 };

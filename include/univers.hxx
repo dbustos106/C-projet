@@ -134,8 +134,9 @@ class Univers{
         int getNombreParticules() const;
         
         /**
-        * @brief Fonction qui obtient le type de condition limite appliquée à l'univers.
-        * @return Type de condition limite appliquée à l'univers.
+        * @brief Fonction qui obtient le type de condition limite appliqué aux
+        *        particules aux limites de l'univers.
+        * @return Type de condition limite appliqué.
         */
         
         ConditionLimite getConditionLimite() const;
