@@ -1,8 +1,7 @@
 #pragma once
 
-#include <iostream>
 #include <chrono>
-
+#include <iostream>
 #include "configuration.hxx"
 #include "collections.hxx"
 #include "univers.hxx"

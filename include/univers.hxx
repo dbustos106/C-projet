@@ -1,7 +1,6 @@
 #pragma once
 
 #include <random>
-
 #include "configuration.hxx"
 #include "collections.hxx"
 #include "imprimer.hxx"

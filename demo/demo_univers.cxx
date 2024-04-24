@@ -3,11 +3,13 @@
 *
 * Voici la documentation de Demo Univers.
 *
-* Ce programme a deux modes :\n\n";
+* Ce programme a deux modes :
+*
 * 1. Mode de simulation de particules : C'est le mode principal du programme, qui consiste 
 *    en la simulation d'un univers de particules interagissant sous l'influence de diverses
 *    forces physiques. Ces forces peuvent inclure l'interaction gravitationnelle, le potentiel
 *    de Lennard-Jones et le potenciel gravitationnel; 
+*
 * 2. Mode de mesure des performances : C'est un mode secondaire dans lequel les performances 
 *    des collections standard de C++ sont évaluées pour différentes tailles de données. 
 *    De plus, il mesure le temps nécessaire à la création d'un univers de différentes 
@@ -37,7 +39,7 @@
 * - LD_X = Définit la longueur caractéristique de l'axe X (défaut : 0)
 * - LD_Y = Définit la longueur caractéristique de l'axe Y (défaut : 0)
 * - LD_Z = Définit la longueur caractéristique de l'axe Z (défaut : 0)
-* - R_CUT = Définit le rayon de coupure pour la construction de la grille (défaut : 2.5)\n";
+* - R_CUT = Définit le rayon de coupure pour la construction de la grille (défaut : 2.5)
 * - CONDITION_LIMITE = Définit le traitement au bord de l'univers. 'Reflexion', 'Absorption' ou 'Periodique' (défaut : Absorption)
 * - LIMITER_VITESSE = OUI pour activer la limitation d'énergie (défaut : NON)
 * - ENERGIE_DESIREE = En cas de limitation d'énergie, définit l'énergie desirée du système (défaut : 0.005)
@@ -49,10 +51,10 @@
 *
 * ## Exemple d'utilisation :
 * 
-* `ADRESSE_FICHIER  = colision1.vtu`
-* `FORCE_LJ         = OUI`
-* `LD_X             = 250`
-* `LD_Y             = 130`
+* `   ADRESSE_FICHIER  = colision1.vtu` \n
+* `   FORCE_LJ         = OUI` \n
+* `   LD_X             = 250` \n
+* `   LD_Y             = 130` \n
 * 
 * Cela initialisera la simulation avec un univers de dimensions (250 x 130), 
 * avec une distance de coupure de 2,5 et une condition limite de type absorbant. 
@@ -123,7 +125,7 @@ int main(int argc, char *argv[]){
     }while(option != 1 && option != 2);
 
     /* Exécute le mode de mesure des performances */
-    if(option == 1){
+    if(option == 2){
         mesurerPerformance();
 
     /* Exécute le mode de simulation de particules */
@@ -143,7 +145,8 @@ int main(int argc, char *argv[]){
 
         /* Créer un univers et lire le fichier .vtu d'entrée */
         Univers univers;
-        lectureDuFichier(configuration.getAdresseFichier(), univers);
+        const std::string& adresseFichier = configuration.getAdresseFichier();
+        lectureDuFichier(adresseFichier, univers);
     
         /* Créer la simulation et démarrer l'algorithme de Stromer-Verlet */
         Simulation simulation(univers);

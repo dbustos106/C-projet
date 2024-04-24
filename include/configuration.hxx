@@ -1,10 +1,13 @@
 #pragma once
 
 #include "fichier.hxx"
-#include <iostream>
-#include <fstream>
 #include <sstream>
 #include <cmath>
+
+/**
+* @brief Énumération représentant les différentes conditions limites 
+*        qui peuvent être appliquées aux bords de la simulation.
+*/ 
 
 enum class ConditionLimite{ Reflexion, Absorption, Periodique };
 
