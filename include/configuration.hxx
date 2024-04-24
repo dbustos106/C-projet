@@ -252,7 +252,7 @@ class Configuration{
             std::string confirmation;
             std::cin >> confirmation;
 
-            if(configuration != "Y"){
+            if(confirmation != "Y"){
                 exit(0);
             }
 
