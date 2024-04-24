@@ -58,14 +58,14 @@ class Particule{
         * @param vec est le vecteur de changement de vitesse.
         */
 
-        void accelerer(Vecteur<double>&& vec);
+        void accelerer(const Vecteur<double>& vec);
         
         /**
         * @brief Fonction qui déplace la particule.
         * @param vec est le vecteur de changement de position.
         */
         
-        void deplacer(Vecteur<double>&& vec);
+        void deplacer(const Vecteur<double>& vec);
 
         /* Getters */
 
@@ -149,25 +149,11 @@ class Particule{
         void setPosition(const Vecteur<double>& newPosition);
         
         /**
-        * @brief Fonction qui définit la position de la particule.
-        * @param newPosition est la nouvelle position de la particule.
-        */
-        
-        void setPosition(Vecteur<double>&& newPosition);
-        
-        /**
         * @brief Fonction qui définit la vitesse de la particule.
         * @param newVitesse est la nouvelle vitesse de la particule.
         */
         
         void setVitesse(const Vecteur<double>& newVitesse);
-        
-        /**
-        * @brief Fonction qui définit la vitesse de la particule.
-        * @param newVitesse est la nouvelle vitesse de la particule.
-        */
-        
-        void setVitesse(Vecteur<double>&& newVitesse);
         
         /**
         * @brief Fonction qui définit la force appliquée à la particule.
@@ -177,25 +163,11 @@ class Particule{
         void setForce(const Vecteur<double>& newForce);
         
         /**
-        * @brief Fonction qui définit la force appliquée à la particule.
-        * @param newForce est la nouvelle force appliquée à la particule.
-        */
-        
-        void setForce(Vecteur<double>&& newForce);
-        
-        /**
         * @brief Fonction qui définit la force précédente appliquée à la particule.
         * @param newFold est la force précédente appliquée à la particule.
         */
         
         void setFold(const Vecteur<double>& newFold);
-        
-        /**
-        * @brief Fonction qui définit la force précédente appliquée à la particule.
-        * @param newFold est la force précédente appliquée à la particule.
-        */
-        
-        void setFold(Vecteur<double>&& newFold);
         
         /**
         * @brief Fonction qui définit la masse de la particule.

@@ -18,11 +18,11 @@ Particule::Particule(std::string categorie, double posX, double posY, double pos
 
 /* Méthodes publiques */
 
-void Particule::deplacer(Vecteur<double>&& vec){
+void Particule::deplacer(const Vecteur<double>& vec){
     position += vec;
 }
 
-void Particule::accelerer(Vecteur<double>&& vec){
+void Particule::accelerer(const Vecteur<double>& vec){
     vitesse += vec;
 }
 
@@ -74,32 +74,16 @@ void Particule::setPosition(const Vecteur<double>& newPosition){
     position = newPosition;
 }
 
-void Particule::setPosition(Vecteur<double>&& newPosition){
-    position = std::move(newPosition);
-}
-
 void Particule::setVitesse(const Vecteur<double>& newVitesse){
     vitesse = newVitesse;
-}
-
-void Particule::setVitesse(Vecteur<double>&& newVitesse){
-    vitesse = std::move(newVitesse);
 }
 
 void Particule::setForce(const Vecteur<double>& newForce){
     force = newForce;
 }
 
-void Particule::setForce(Vecteur<double>&& newForce){
-    force = std::move(newForce);
-}
-
 void Particule::setFold(const Vecteur<double>& newFold){
     Fold = newFold;
-}
-
-void Particule::setFold(Vecteur<double>&& newFold){
-    Fold = std::move(newFold);
 }
 
 void Particule::setMasse(double newMasse){

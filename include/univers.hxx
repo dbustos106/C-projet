@@ -79,7 +79,7 @@ class Univers{
         * @param[in] vec est la direction à déplacer.
         */
 
-        void deplacerParticule(Particule* particule, Vecteur<double>&& vec);
+        void deplacerParticule(Particule* particule, const Vecteur<double>& vec);
 
         /**
         * @brief Une fonction qui remplit le vecteur de pointeurs de

@@ -105,8 +105,8 @@ void afficherDebut(){
               << "   tailles de particules.\n\n";
 
     std::cout << "Veuillez saisir: \n\n"
-              << " 1 pour le mode de mesure des performances\n"
-              << " 2 pour le mode de simulation de particules\n\n"
+              << " 1 pour le mode de simulation de particules\n"
+              << " 2 pour le mode de mesure des performances\n\n"
               << ">> ";
 }
 

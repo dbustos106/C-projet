@@ -161,10 +161,10 @@ Vecteur<double> Univers::calculerVecteurDirection(Particule* particule1, Particu
     return Vecteur<double>(dx, dy, dz);
 }
 
-void Univers::deplacerParticule(Particule* particule, Vecteur<double>&& vec){
+void Univers::deplacerParticule(Particule* particule, const Vecteur<double>& vec){
     
     /* Déplacer la particule */
-    particule->deplacer(std::move(vec));
+    particule->deplacer(vec);
 
     /* Corriger la position s'il y a périodicité */
     if(conditionLimite == ConditionLimite::Periodique){
