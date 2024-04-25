@@ -47,10 +47,17 @@ class Vecteur{
         
         /**
         * @brief Fonction qui calcule la norme de ce vecteur.
-        * @return La norme (module) du vecteur.
+        * @return La norme du vecteur.
         */
 
         double norme() const;
+
+        /**
+        * @brief Fonction qui calcule la norme au carré de ce vecteur.
+        * @return La norme carré du vecteur.
+        */
+
+        double normeCarre() const;
 
         /* Getters */
 

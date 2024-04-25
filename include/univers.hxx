@@ -112,6 +112,14 @@ class Univers{
         const Vecteur<double>& getLd() const;
         
         /**
+        * @brief Fonction qui obtient le type de condition limite appliqué aux
+        *        particules aux limites de l'univers.
+        * @return Type de condition limite appliqué.
+        */
+        
+        ConditionLimite getConditionLimite() const;
+
+        /**
         * @brief Fonction qui obtient le rayon de coupure pour les réflexions aux bords.
         * @return Rayon de coupure pour les réflexions aux bords.
         */
@@ -132,12 +140,4 @@ class Univers{
         
         int getNombreParticules() const;
         
-        /**
-        * @brief Fonction qui obtient le type de condition limite appliqué aux
-        *        particules aux limites de l'univers.
-        * @return Type de condition limite appliqué.
-        */
-        
-        ConditionLimite getConditionLimite() const;
-
 };

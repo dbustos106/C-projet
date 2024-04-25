@@ -266,6 +266,10 @@ const Vecteur<double>& Univers::getLd() const{
     return ld;
 }
 
+ConditionLimite Univers::getConditionLimite() const{
+    return conditionLimite;
+}
+
 double Univers::getRCut() const{
     return rCut;
 }
@@ -276,8 +280,4 @@ double Univers::getRCutReflexion() const{
 
 int Univers::getNombreParticules() const{
     return nombreParticules;
-}
-
-ConditionLimite Univers::getConditionLimite() const{
-    return conditionLimite;
 }

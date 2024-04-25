@@ -18,6 +18,11 @@ double Vecteur<T>::norme() const{
     return std::sqrt(x*x + y*y + z*z);
 }
 
+template <typename T>
+double Vecteur<T>::normeCarre() const{
+    return x*x + y*y + z*z;
+}
+
 /* Getters */
 
 template <typename T>

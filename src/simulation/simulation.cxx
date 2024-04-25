@@ -43,6 +43,9 @@ void Simulation::stromerVerlet(){
     sauvegarderEtatEnTexte(fichierTexte, univers, 0);
     sauvegarderEtatEnVTU(nomDossier, univers, 0);
 
+    //std::cout << univers.getNombreParticules() << "\n";
+    //exit(0);
+
     double t = 0;
     for(int i = 0; t < tFinal; t = t + delta, i++){
 
@@ -67,7 +70,7 @@ void Simulation::stromerVerlet(){
         }
 
         /* mettre à jour la vitesse */
-        if(limiterVitesse && i % 1000 == 0){
+        if(limiterVitesse && i != 0 && i % 1000 == 0){
             double energieCinetique = calculerEnergieCinetique();
             double beta = std::sqrt(energieDesiree/energieCinetique);
             for(const auto& cellule : univers.getGrille()){
@@ -197,7 +200,7 @@ double Simulation::calculerEnergieCinetique(){
     double energieCinetique = 0;
     for(auto& cellule : univers.getGrille()){
         for(auto particule : cellule.getParticules()){
-            energieCinetique += particule->getMasse()*pow(particule->getVitesse().norme(), 2);
+            energieCinetique += particule->getMasse()*particule->getVitesse().normeCarre();
         }
     }
     energieCinetique /= 2;

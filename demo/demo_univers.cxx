@@ -146,8 +146,37 @@ int main(int argc, char *argv[]){
         /* Créer un univers et lire le fichier .vtu d'entrée */
         Univers univers;
         const std::string& adresseFichier = configuration.getAdresseFichier();
-        lectureDuFichier(adresseFichier, univers);
+        //lectureDuFichier(adresseFichier, univers);
     
+        double distance = pow(2, 1.0/6);
+        double xCircle = 0;
+        double yCircle = 20;
+        double zCircle = 0;
+        double radius = 12;
+        double changeAnglePrev = 0;
+
+        for(int j = 1; j < radius; j = j+distance){
+            double nombreParticulesPerCercle = j*6;
+            double changeAngle = 2 * M_PI / nombreParticulesPerCercle;
+            for(int i = 0; i < nombreParticulesPerCercle; i++){
+                double xPoint = xCircle + j * cos(changeAngle*i + changeAnglePrev);
+                double yPoint = yCircle + j * sin(changeAngle*i + changeAnglePrev);
+                Particule particle("circle", xPoint, yPoint, zCircle, 0,-10,0, 1);
+                univers.ajouterParticule(particle);
+            }
+            changeAnglePrev = changeAngle;
+        }
+
+        double xRectangle = -pow(2, 1.0/6)*111;
+        double yRectangle = -pow(2, 1.0/6)*78 + 4;
+        double zRectangle = 0;
+        for(int i = 0; i < 222; i++){
+            for(int j = 0; j < 77; j++){
+                Particule particuleRectangle("rectangle", xRectangle + i*distance, yRectangle + j*distance, zRectangle, 0,0,0, 1);
+                univers.ajouterParticule(particuleRectangle);
+            }
+        }
+
         /* Créer la simulation et démarrer l'algorithme de Stromer-Verlet */
         Simulation simulation(univers);
         simulation.stromerVerlet();
