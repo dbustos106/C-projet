@@ -305,3 +305,7 @@ void Configuration::setDelta(double newDelta){
 void Configuration::setTFinal(double newTFinal){
     tFinal = newTFinal;
 }
+
+void Configuration::setNomDossier(const std::string& newNomDossier){
+    nomDossier = newNomDossier;
+}

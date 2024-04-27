@@ -289,7 +289,7 @@ class Configuration{
 
         /**
         * @brief
-        * Fonction permettant de modifier la configuration des
+        * Fonction qui permet de modifier la configuration des
         * forces qui seront utilisées dans la simulation.
         */
 
@@ -320,9 +320,17 @@ class Configuration{
 
         /**
         * @brief 
-        * Fonction permettant de modifier la configuration du temps de fin.
+        * Fonction qui permet de modifier la configuration du temps de fin.
         */
 
         void setTFinal(double newTFinal);
+
+        /**
+        * @brief 
+        * Fonction qui permet de modifier la configuration pour le nom
+        * du dossier dans lequel sont stockés les fichiers de sortie.
+        */
+
+        void setNomDossier(const std::string& newNomDossier);
 
 };

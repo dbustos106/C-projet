@@ -6,31 +6,38 @@
 * Ce programme a deux modes :
 *
 * 1. Mode de simulation de particules : C'est le mode principal du programme, qui consiste 
-*    en la simulation d'un univers de particules interagissant sous l'influence de diverses
-*    forces physiques. Ces forces peuvent inclure l'interaction gravitationnelle, le potentiel
-*    de Lennard-Jones et le potenciel gravitationnel; 
+*    en la simulation d'un univers de particules interagissant sous l'influence de diverses \n
+*    forces physiques. Ces forces peuvent inclure l'interaction gravitationnelle, le potentiel 
+*    de Lennard-Jones et le potenciel gravitationnel; \n \n
 *
-* 2. Mode de mesure des performances : C'est un mode secondaire dans lequel les performances 
-*    des collections standard de C++ sont évaluées pour différentes tailles de données. 
+* 2. Mode de mesure des performances : C'est un mode secondaire dans lequel les performances
+*    des collections standard de C++ sont évaluées pour différentes tailles de données. \n
 *    De plus, il mesure le temps nécessaire à la création d'un univers de différentes 
-*    tailles de particules.
+*    tailles de particules. \n
 *
+* ## Mode de simulation
+* 
 * Dans le mode de simulation, il existe 3 types de conditions limites :
 *
-* 1. Réflexion : Les particules subissent une force de réflexion lorsqu'elles se rapprochent
-*                à une distance inférieure à rCutReflexion de l'une des limites de l'univers.
-* 2. Absorption : Les particules disparaissent lorsqu'elles atteignent les limites de l'univers.
-* 3. Périodique : Les particules se déplacent dans un univers périodique.
+* 1. Réflexion : Les particules subissent une force de réflexion lorsqu'elles se rapprochent 
+*                à une distance inférieure à rCutReflexion de l'une des limites de l'univers. \n
+* 2. Absorption : Les particules disparaissent lorsqu'elles atteignent les limites de l'univers. 
+* 3. Périodique : Les particules se déplacent dans un univers périodique. \n
 *
-* D'autre part, pour simplifier les calculs, les forces d'interaction ne sont calculées que si
-* la distance entre les particules est inférieure à rCut. Ainsi, seules les particules qui 
-* contribuent à une attraction significative sont prises en compte.
 *
-* ## Utilisation du programme (mode de simulation)
+* Pour simplifier les calculs, les forces d'interaction ne sont calculées que si la distance
+* entre les particules est inférieure à rCut. Ainsi, seules les particules qui contribuent \n
+* à une attraction significative sont prises en compte. \n \n
+*
+* D'autre part, les particules d'entrée à la simulation doivent être centrées autour du point
+* (0, 0, 0). Elles doivent être fournies via un fichier vtu, dont le nom sera identique à \n
+* celui du dossier de sortie contenant les fichiers de sortie.
+*
+* ## Fichier de configuration
 * 
-* Les différentes variables de configuration, avec lesquelles le programme peut être exécuté,
-* doivent être spécifiées dans le fichier "configuracion" du dossier demo. Si l'une des variables
-* est omise, le programme prendra la valeur par défaut spécifiée ci-dessous:
+* Les différentes variables de configuration, avec lesquelles le programme peut être exécuté, 
+* doivent être spécifiées dans le fichier "configuracion" du dossier demo. Si l'une des variables \n
+* est omise, le programme prendra la valeur par défaut spécifiée ci-dessous: \n
 *
 * - ADRESSE_FICHIER = Définit l'adresse du fichier vtu à partir duquel les particules d'entrée seront lues.
 * - FORCE_LJ = OUI pour activer la force du potentiel de Lennard-Jones (défaut : NON)
@@ -49,17 +56,17 @@
 * - DELTA = Définit la valeur de delta avec laquelle le temps est incrémenté dans la simulation (défaut : 0.00005)
 * - T_FINAL = Définit le temps de fin de la simulation (défaut : 19.5)
 *
-* ## Exemple d'utilisation :
+* ## Exemple de configuration :
 * 
 * `   ADRESSE_FICHIER  = colision1.vtu` \n
 * `   FORCE_LJ         = OUI` \n
 * `   LD_X             = 250` \n
-* `   LD_Y             = 130` \n
+* `   LD_Y             = 130` \n \n
 * 
 * Cela initialisera la simulation avec un univers de dimensions (250 x 130), 
-* avec une distance de coupure de 2,5 et une condition limite de type absorbant. 
+* avec une distance de coupure de 2,5 et une condition limite de type absorbant. \n 
 * Pour le calcul de la force de Lennard-Jones, epsilon est égal à 5 et sigma est 
-* égal à 1. La valeur de delta est de 0,00005 et le temps final de la simulation est de 19,5.
+* égal à 1. La valeur de delta est de 0,00005 et le temps final de la simulation est de 19,5. \n \n
 * 
 * [Documentation détaillée](annotated.html)
 * 
@@ -126,7 +133,36 @@ int main(int argc, char *argv[]){
 
     /* Exécute le mode de mesure des performances */
     if(option == 2){
-        mesurerPerformance();
+        //mesurerPerformance();
+
+        /* Établir la configuration de l'univers */
+        Configuration& configuration = Configuration::getInstance();
+        configuration.setConditionLimite(ConditionLimite::Absorption);
+        configuration.setForces(false, false, true);
+        configuration.setNomDossier("test");
+        configuration.setLd(2, 20, 0);
+        configuration.setDelta(0.005);
+        configuration.setTFinal(1);
+        configuration.setRCut(2);
+
+        Univers univers;
+
+        Particule particule("A", 0,9,0, 0,0,0, 1);
+        univers.ajouterParticule(particule);
+
+        Simulation simulation(univers);
+        std::cout << univers.getNombreParticules() << "\n";
+        simulation.stromerVerlet();
+
+        const Cellule& cellule = univers.getCelluleParIndices(0,6,0);
+        std::cout << cellule.getParticules().size() << "\n";
+        Particule* particulePtr = cellule.getParticules().front();
+
+        Vecteur<double> ldM = -univers.getLd() / 2;
+        univers.deplacerParticule(particulePtr, ldM);
+
+        std::cout << particulePtr->getPosition().getY() << "\n";
+        std::cout << particulePtr->getPosition() << "\n";
 
     /* Exécute le mode de simulation de particules */
     }else{

@@ -10,23 +10,22 @@ Simulation::Simulation(Univers& univers) : univers(univers){
     forceLJ = configuration.getForceLJ();
     forceIG = configuration.getForceIG();
     forcePG = configuration.getForcePG();
-    
     limiterVitesse = configuration.getLimiterVitesse();
     energieDesiree = configuration.getEnergieDesiree();
-
     epsilon = configuration.getEpsilon();
     sigma = configuration.getSigma();
     G = configuration.getG();
-
     delta = configuration.getDelta();
     tFinal = configuration.getTFinal();
-
-    /* Créer un dossier pour les fichiers de sortie */
     nomDossier = configuration.getNomDossier();
-    creerDossier(nomDossier);
 
-    /* Ouvrir le fichier texte qui sera utilisé pour stocker l'état de l'univers */
-    fichierTexte = ouvrirFichierDeSortie(nomDossier + "/simulation.txt");
+    if(nomDossier != "test"){
+        /* Créer un dossier pour les fichiers de sortie */
+        creerDossier(nomDossier);
+
+        /* Ouvrir le fichier texte qui sera utilisé pour stocker l'état de l'univers */
+        fichierTexte = ouvrirFichierDeSortie(nomDossier + "/simulation.txt");
+    }
 
     /* Ajouter des particules aux cellules */
     univers.remplirCellules();
@@ -39,16 +38,19 @@ void Simulation::stromerVerlet(){
     /* Calculer les forces */
     calculerForcesDuSysteme();
 
-    /* Sauvegarder l'etat de l'univers */
-    sauvegarderEtatEnTexte(fichierTexte, univers, 0);
-    sauvegarderEtatEnVTU(nomDossier, univers, 0);
-
     double t = 0;
-    for(int i = 1; t < tFinal; t = t + delta, i++){
+    for(int i = 0; t < tFinal; t = t + delta, i++){
+
+        if(i % 1000 == 0 && nomDossier != "test"){
+            /* Sauvegarder l'etat de l'univers */
+            sauvegarderEtatEnTexte(fichierTexte, univers, i);
+            sauvegarderEtatEnVTU(nomDossier, univers, i);
+        }
 
         /* Mettre à jour les paramètres de position */
         for(const auto& cellule : univers.getGrille()){
             for(auto particule : cellule.getParticules()){
+                std::cout << *particule << "\n";
                 univers.deplacerParticule(particule, particule->getVitesse()*delta + (0.5/particule->getMasse())*particule->getForce()*pow(delta, 2));
                 particule->setFold(particule->getForce());
                 particule->setCelluleConfirmee(false);
@@ -77,12 +79,6 @@ void Simulation::stromerVerlet(){
                     }
                 }
             //}
-        }
-
-        if(i % 1000 == 0){
-            /* Sauvegarder l'etat de l'univers */
-            sauvegarderEtatEnTexte(fichierTexte, univers, i);
-            sauvegarderEtatEnVTU(nomDossier, univers, i);
         }
 
     }

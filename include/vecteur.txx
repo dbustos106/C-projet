@@ -60,8 +60,13 @@ void Vecteur<T>::setZ(T newZ){
 /* Surcharge interne des operateurs */
 
 template <typename T>
+Vecteur<T> Vecteur<T>::operator-() const{
+    return Vecteur<T>(-x, -y, -z);
+}
+
+template <typename T>
 template <typename S>
-bool Vecteur<T>::operator==(Vecteur<S>&& autre) const {
+bool Vecteur<T>::operator==(Vecteur<S>&& autre) const{
     return x == autre.getX() && y == autre.getY() && z == autre.getZ();
 }
 

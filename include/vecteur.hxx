@@ -121,6 +121,14 @@ class Vecteur{
         /* Surcharge interne des operateurs */
 
         /**
+        * @brief
+        * Surcharge interne de l'opérateur unaire (-).
+        * @return Vecteur opposé.
+        */
+
+        Vecteur<T> operator-() const;
+
+        /**
         * @brief 
         * Surcharge interne de l'opérateur d'égalité.
         * @param autre est l'autre vecteur avec lequel il est comparé.
