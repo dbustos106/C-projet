@@ -58,7 +58,8 @@ class Univers{
         void ajouterParticule(Particule& particule);
 
         /**
-        * @brief Fonction qui ajoute un nombre donné de particules aléatoires à l'univers.
+        * @brief Fonction qui ajoute un nombre donné de particules
+        *        aléatoires à l'univers.
         * @param[in] n est le nombre de particules à créer.
         */
 
@@ -94,50 +95,62 @@ class Univers{
         */
 
         void corrigerCellules();
+
+        /**
+        * @brief Fonction qui renvoie une référence constante à
+        *        la cellule avec les indices x, y et z.
+        */
+
+        const Cellule& getCelluleParIndices(int x, int y, int z);
         
         /* Getters */
 
         /**
-        * @brief Fonction qui obtient une référence au vecteur de cellules de l'univers.
+        * @brief Fonction qui obtient une référence au vecteur de
+        *        cellules de l'univers.
         * @return Référence au vecteur de cellules de l'univers.
         */
 
         const std::vector<Cellule>& getGrille() const;
         
         /**
-        * @brief Fonction qui obtient une référence au vecteur des longueurs caractéristiques de l'univers.
+        * @brief Fonction qui obtient une référence au vecteur des
+        *        longueurs caractéristiques de l'univers.
         * @return Référence au vecteur des longueurs caractéristiques.
         */
 
         const Vecteur<double>& getLd() const;
         
         /**
-        * @brief Fonction qui obtient le type de condition limite appliqué aux
-        *        particules aux limites de l'univers.
+        * @brief Fonction qui obtient le type de condition limite 
+        *        appliqué aux particules aux limites de l'univers.
         * @return Type de condition limite appliqué.
         */
         
         ConditionLimite getConditionLimite() const;
 
         /**
-        * @brief Fonction qui obtient le rayon de coupure pour les réflexions aux bords.
+        * @brief Fonction qui obtient le nombre total de particules
+        *        dans l'univers.
+        * @return Nombre total de particules dans l'univers.
+        */
+        
+        int getNombreParticules() const;
+
+        /**
+        * @brief Fonction qui obtient le rayon de coupure pour les 
+        *        réflexions aux bords.
         * @return Rayon de coupure pour les réflexions aux bords.
         */
 
         double getRCutReflexion() const;
         
         /**
-        * @brief Fonction qui obtient le rayon de coupure pour les interactions attractives.
+        * @brief Fonction qui obtient le rayon de coupure pour les 
+        *        interactions attractives.
         * @return Rayon de coupure pour les interactions attractives.
         */
 
         double getRCut() const;
 
-        /**
-        * @brief Fonction qui obtient le nombre total de particules dans l'univers.
-        * @return Nombre total de particules dans l'univers.
-        */
-        
-        int getNombreParticules() const;
-        
 };

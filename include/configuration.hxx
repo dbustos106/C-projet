@@ -251,4 +251,18 @@ class Configuration{
 
         void setLd(double newLdX, double newLdY, double newLdZ);
 
+        /**
+        * @brief Fonction qui permet de changer la configuration du rayon
+        *        de coupure avec lequel le maillage de l'univers est construit.
+        */
+
+        void setRCut(double newRCut);
+
+        /**
+        * @brief fonction qui permet de modifier la configuration de la condition
+        *        limite appliquée aux bords de l'univers.
+        */
+
+        void setConditionLimite(ConditionLimite newConditionLimite);
+
 };

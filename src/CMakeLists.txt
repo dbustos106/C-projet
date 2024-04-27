@@ -7,10 +7,10 @@ add_library(
     modele/univers.cxx 
     modele/particule.cxx 
     structures/cellule.cxx 
-    simulation/simulation.cxx 
-    simulation/performance.cxx
-    io/sauvegardage.cxx 
-    io/lecture.cxx
+    modes_execution/simulation.cxx 
+    modes_execution/performance.cxx
+    entre_sortie/sauvegardage.cxx 
+    entre_sortie/lecture.cxx
     utils/fichier.cxx
     utils/imprimer.cxx 
 )

@@ -60,28 +60,32 @@ void Vecteur<T>::setZ(T newZ){
 /* Surcharge interne des operateurs */
 
 template <typename T>
-bool Vecteur<T>::operator==(Vecteur<T>&& autre) const {
-    return x == autre.x && y == autre.y && z == autre.z;
+template <typename S>
+bool Vecteur<T>::operator==(Vecteur<S>&& autre) const {
+    return x == autre.getX() && y == autre.getY() && z == autre.getZ();
 }
 
 template <typename T>
-bool Vecteur<T>::operator==(const Vecteur<T>& autre) const{
-    return x == autre.x && y == autre.y && z == autre.z;
+template <typename S>
+bool Vecteur<T>::operator==(const Vecteur<S>& autre) const{
+    return x == autre.getX() && y == autre.getY() && z == autre.getZ();
 }
 
 template <typename T>
-Vecteur<T>& Vecteur<T>::operator+=(const Vecteur<T>& autre) {
-    x += autre.x;
-    y += autre.y;
-    z += autre.z;
+template <typename S>
+Vecteur<T>& Vecteur<T>::operator+=(const Vecteur<S>& autre) {
+    x += autre.getX();
+    y += autre.getY();
+    z += autre.getZ();
     return *this;
 }
 
 template <typename T>
-Vecteur<T>& Vecteur<T>::operator-=(const Vecteur<T>& autre) {
-    x -= autre.x;
-    y -= autre.y;
-    z -= autre.z;
+template <typename S>
+Vecteur<T>& Vecteur<T>::operator-=(const Vecteur<S>& autre) {
+    x -= autre.getX();
+    y -= autre.getY();
+    z -= autre.getZ();
     return *this;
 }
 
@@ -89,19 +93,19 @@ Vecteur<T>& Vecteur<T>::operator-=(const Vecteur<T>& autre) {
 
 template <typename U>
 std::ostream& operator<<(std::ostream& os, const Vecteur<U>& vec){
-    os << "(" << vec.x << ", " << vec.y << ", " << vec.z << ")";
+    os << "(" << vec.getX() << ", " << vec.getY() << ", " << vec.getZ() << ")";
     return os;
 }
 
 /* Surcharge externe des operateurs */
 
-template <typename T>
-Vecteur<T> operator+(const Vecteur<T>& vec1, const Vecteur<T>& vec2){
+template <typename T, typename S>
+Vecteur<T> operator+(const Vecteur<T>& vec1, const Vecteur<S>& vec2){
     return Vecteur<T>(vec1.getX() + vec2.getX(), vec1.getY() + vec2.getY(), vec1.getZ() + vec2.getZ());
 }
 
-template <typename T>
-Vecteur<T> operator-(const Vecteur<T>& vec1, const Vecteur<T>& vec2){
+template <typename T, typename S>
+Vecteur<T> operator-(const Vecteur<T>& vec1, const Vecteur<S>& vec2){
     return Vecteur<T>(vec1.getX() - vec2.getX(), vec1.getY() - vec2.getY(), vec1.getZ() - vec2.getZ());
 }
 

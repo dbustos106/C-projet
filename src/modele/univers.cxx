@@ -31,7 +31,7 @@ Univers::Univers() : nombreParticules(0){
 
     /* Vérifier les nombres de cellules */
     if(nc.getX() <= 0 || nc.getY() <= 0 || nc.getZ() <= 0){
-        std::cerr << "Erreur : Une des longueurs caractéristiques est inférieure à rCut";
+        std::cerr << "Erreur : Une des longueurs caractéristiques est inférieure à rCut.";
         exit(0);
     }
     
@@ -256,6 +256,11 @@ void Univers::corrigerCellules(){
     }
 }
 
+const Cellule& Univers::getCelluleParIndices(int x, int y, int z){
+    int indice = x*nc.getY()*nc.getZ() + y * nc.getZ() + z;
+    return grille[indice];
+}
+
 /* Getters */
 
 const std::vector<Cellule>& Univers::getGrille() const{
@@ -270,14 +275,14 @@ ConditionLimite Univers::getConditionLimite() const{
     return conditionLimite;
 }
 
-double Univers::getRCut() const{
-    return rCut;
+int Univers::getNombreParticules() const{
+    return nombreParticules;
 }
 
 double Univers::getRCutReflexion() const{
     return rCutReflexion;
 }
 
-int Univers::getNombreParticules() const{
-    return nombreParticules;
+double Univers::getRCut() const{
+    return rCut;
 }

@@ -283,3 +283,11 @@ void Configuration::setLd(double newLdX, double newLdY, double newLdZ){
     ldY = newLdY;
     ldZ = newLdZ;
 }
+
+void Configuration::setRCut(double newRCut){
+    rCut = newRCut;
+}
+
+void Configuration::setConditionLimite(ConditionLimite newConditionLimite){
+    conditionLimite = newConditionLimite;
+}

@@ -113,7 +113,8 @@ class Vecteur{
         * @return Vrai si les vecteurs sont égaux, faux sinon.
         */
 
-        bool operator==(Vecteur<T>&& autre) const;
+        template <typename S>
+        bool operator==(Vecteur<S>&& autre) const;
         
         /**
         * @brief Surcharge interne de l'opérateur d'égalité.
@@ -121,7 +122,8 @@ class Vecteur{
         * @return Vrai si les vecteurs sont égaux, faux sinon.
         */
 
-        bool operator==(const Vecteur<T>& autre) const;
+        template <typename S>
+        bool operator==(const Vecteur<S>& autre) const;
         
         /**
         * @brief Surcharge de l'opérateur d'addition et d'affectation.
@@ -129,7 +131,8 @@ class Vecteur{
         * @return Une référence à ce vecteur après l'opération.
         */
 
-        Vecteur<T> &operator+=(const Vecteur<T>& autre);
+        template <typename S>
+        Vecteur<T> &operator+=(const Vecteur<S>& autre);
         
         /**
         * @brief Surcharge de l'opérateur de soustraction et d'affectation.
@@ -137,7 +140,8 @@ class Vecteur{
         * @return Une référence à ce vecteur après l'opération.
         */
         
-        Vecteur<T> &operator-=(const Vecteur<T>& autre);
+        template <typename S>
+        Vecteur<T> &operator-=(const Vecteur<S>& autre);
 
         /* Surcharge d'opérateurs amis */
 
@@ -162,8 +166,8 @@ class Vecteur{
 * @return Le résultat de l'addition des deux vecteurs.
 */
 
-template <typename T>
-Vecteur<T> operator+(const Vecteur<T>& vec1, const Vecteur<T>& vec2);
+template <typename T, typename S>
+Vecteur<T> operator+(const Vecteur<T>& vec1, const Vecteur<S>& vec2);
 
 /**
 * @brief Surcharge de l'opérateur de soustraction pour soustraire deux vecteurs.
@@ -172,8 +176,8 @@ Vecteur<T> operator+(const Vecteur<T>& vec1, const Vecteur<T>& vec2);
 * @return Le résultat de la soustraction des deux vecteurs.
 */
 
-template <typename T>
-Vecteur<T> operator-(const Vecteur<T>& vec1, const Vecteur<T>& vec2);
+template <typename T, typename S>
+Vecteur<T> operator-(const Vecteur<T>& vec1, const Vecteur<S>& vec2);
 
 /**
 * @brief Surcharge de l'opérateur de multiplication par un scalaire pour multiplier un vecteur par un scalaire.

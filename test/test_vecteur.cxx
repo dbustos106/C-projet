@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "../include/vecteur.hxx"
+#include "vecteur.hxx"
 
 TEST(VecteurTest, testGettersAndSetters){
     Vecteur<double> vec(1.0, 2.0, 3.0);
@@ -19,16 +19,16 @@ TEST(VecteurTest, testGettersAndSetters){
 
 TEST(VecteurTest, testOperatorEqual){
     Vecteur<double> vec1(3.0, 4.0, 5.0);
-    Vecteur<double> vec2(3.0, 4.0, 5.0);
+    Vecteur<int> vec2(3, 4, 5);
 
     ASSERT_TRUE(vec1 == vec2);
     ASSERT_TRUE(vec1 == Vecteur<double>(3.0, 4.0, 5.0));
-    ASSERT_TRUE(Vecteur<double>(3.0, 4.0, 5.0) == Vecteur<double>(3, 4, 5));
+    ASSERT_TRUE(Vecteur<double>(3.0, 4.0, 5.0) == Vecteur<int>(3, 4, 5));
 }
 
 TEST(VecteurTest, testOperatorPlusEqual){
     Vecteur<double> vec1(1.0, 2.0, 3.0);
-    Vecteur<double> vec2(4.0, 5.0, 6.0);
+    Vecteur<int> vec2(4, 5, 6);
 
     vec1 += vec2;
 
@@ -79,7 +79,7 @@ TEST(VecteurTest, testOperatorPlus){
 
 TEST(VecteurTest, testOperatorMinus){
     Vecteur<double> vec1(4.0, 5.0, 6.0);
-    Vecteur<double> vec2(1.0, 2.0, 3.0);
+    Vecteur<int> vec2(1, 2, 3);
 
     Vecteur<double> result = vec1 - vec2;
 

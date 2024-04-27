@@ -72,12 +72,14 @@ void Simulation::stromerVerlet(){
         /* mettre à jour la vitesse */
         if(limiterVitesse && i != 0 && i % 1000 == 0){
             double energieCinetique = calculerEnergieCinetique();
-            double beta = std::sqrt(energieDesiree/energieCinetique);
-            for(const auto& cellule : univers.getGrille()){
-                for(auto particule : cellule.getParticules()){
-                    particule->setVitesse(particule->getVitesse() * beta);
+            //if(energieCinetique > energieDesiree){
+                double beta = std::sqrt(energieDesiree/energieCinetique);
+                for(const auto& cellule : univers.getGrille()){
+                    for(auto particule : cellule.getParticules()){
+                        particule->setVitesse(particule->getVitesse() * beta);
+                    }
                 }
-            }
+            //}
         }
 
         if(i % 1000 == 0){

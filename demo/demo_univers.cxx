@@ -26,7 +26,7 @@
 * la distance entre les particules est inférieure à rCut. Ainsi, seules les particules qui 
 * contribuent à une attraction significative sont prises en compte.
 *
-* ## Utilisation du programme 
+* ## Utilisation du programme (mode de simulation)
 * 
 * Les différentes variables de configuration, avec lesquelles le programme peut être exécuté,
 * doivent être spécifiées dans le fichier "configuracion" du dossier demo. Si l'une des variables
@@ -148,15 +148,16 @@ int main(int argc, char *argv[]){
         const std::string& adresseFichier = configuration.getAdresseFichier();
         //lectureDuFichier(adresseFichier, univers);
     
-        double distance = pow(2, 1.0/6);
         double xCircle = 0;
-        double yCircle = 20;
+        double yCircle = 0;
         double zCircle = 0;
         double radius = 12;
         double changeAnglePrev = 0;
+        int nombreParticulesPerCercle = 1;
 
-        for(int j = 1; j < radius; j = j+distance){
-            double nombreParticulesPerCercle = j*6;
+        double distance = pow(2, 1.0/6);
+        for(double j = 1; j < radius; j = j+distance){
+            nombreParticulesPerCercle += 6;
             double changeAngle = 2 * M_PI / nombreParticulesPerCercle;
             for(int i = 0; i < nombreParticulesPerCercle; i++){
                 double xPoint = xCircle + j * cos(changeAngle*i + changeAnglePrev);
@@ -167,11 +168,13 @@ int main(int argc, char *argv[]){
             changeAnglePrev = changeAngle;
         }
 
-        double xRectangle = -pow(2, 1.0/6)*111;
-        double yRectangle = -pow(2, 1.0/6)*78 + 4;
+        double xRectangle = -125;
+        double yRectangle = -90;
         double zRectangle = 0;
-        for(int i = 0; i < 222; i++){
-            for(int j = 0; j < 77; j++){
+
+        distance = 0.8;
+        for(int i = 0; i < 312; i++){
+            for(int j = 0; j < 55; j++){
                 Particule particuleRectangle("rectangle", xRectangle + i*distance, yRectangle + j*distance, zRectangle, 0,0,0, 1);
                 univers.ajouterParticule(particuleRectangle);
             }

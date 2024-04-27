@@ -60,7 +60,7 @@ class Simulation{
         void calculerForceSurParticule(const Cellule& cellule, Particule* particule);
         
         /**
-        * @brief fonction qui calcule l'énergie cinétique du système à un moment donné.
+        * @brief Fonction qui calcule l'énergie cinétique du système à un moment donné.
         */
 
         double calculerEnergieCinetique();
