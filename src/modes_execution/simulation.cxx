@@ -164,6 +164,7 @@ void Simulation::calculerForceSurParticule(const Cellule& cellule, Particule* pa
 
     /* Calculer les forces d'interaction entre particules */
     double aux1 = 24*epsilon;
+    double aux2 = 4*pow(M_PI,2);
     for(auto voisine : cellule.getVoisines()){
         for(auto autreParticule : voisine->getParticules()){
 
@@ -175,8 +176,8 @@ void Simulation::calculerForceSurParticule(const Cellule& cellule, Particule* pa
                 
                 /* Ajouter la force d’interaction du potentiel de Lennard-Jones */      
                 if(forceLJ && distance < univers.getRCut() && distance != 0){     
-                    double aux2 = pow(sigma/distance, 6);
-                    double magnitude = aux1*(1/pow(distance, 2))*aux2*(1-2*aux2);
+                    double aux3 = pow(sigma/distance, 6);
+                    double magnitude = aux1*(1/pow(distance, 2))*aux3*(1-2*aux3);
                     Vecteur<double> force = direction * magnitude;
                     particule->setForce(particule->getForce() + force);
                     autreParticule->setForce(autreParticule->getForce() - force);
@@ -184,7 +185,7 @@ void Simulation::calculerForceSurParticule(const Cellule& cellule, Particule* pa
 
                 /* Ajouter la force d’interaction gravitationnelle */
                 if(forceIG && distance < univers.getRCut() && distance != 0){
-                    double magnitude = 4*pow(M_PI,2)*particule->getMasse()*autreParticule->getMasse() / pow(distance, 3);
+                    double magnitude = aux2*particule->getMasse()*autreParticule->getMasse() / pow(distance, 3);
                     Vecteur<double> force = direction * magnitude;
                     autreParticule->setForce(autreParticule->getForce() - force);
                     particule->setForce(particule->getForce() + force);
