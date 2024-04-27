@@ -1,5 +1,5 @@
 add_executable(demo_univers demo_univers.cxx)
-target_link_libraries(demo_univers particules)
+target_link_libraries(demo_univers projet)
 
 # Copier des fichiers .vtu
 file(GLOB VTU_FILES "${CMAKE_CURRENT_SOURCE_DIR}/*.vtu")

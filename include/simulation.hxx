@@ -6,7 +6,8 @@
 #include "univers.hxx"
 
 /**
-* @brief Classe représentant la simulation de particules interagissant.
+* @brief 
+* Classe représentant la simulation de particules interagissant.
 */
 
 class Simulation{
@@ -35,24 +36,27 @@ class Simulation{
         /* Méthodes privées */
 
         /**
-        * @brief Fonction qui calcule toutes les forces impliquées dans le système.
+        * @brief 
+        * Fonction qui calcule toutes les forces impliquées dans le système.
         */
 
         void calculerForcesDuSysteme();
         
         /**
-        * @brief Fonction qui calcule les forces réfléchissantes qui affectent 
-        *        une particule lorsqu'elle se trouve très près du bord.
+        * @brief 
+        * Fonction qui calcule les forces réfléchissantes qui
+        * affectent une particule lorsqu'elle se trouve très près du bord.
         * @param[in] particule est la particule.
         */
         
         void calculerForceReflexive(Particule* particule);
         
         /**
-        * @brief Fonction qui calcule les forces qui affectent une particule 
-        *        appartenant à une cellule donnée. Les forces peuvent être dues 
-        *        au potentiel de Lennard-Jones, à l'interaction gravitationnelle 
-        *        ou au potentiel gravitationnel.
+        * @brief 
+        * Fonction qui calcule les forces qui affectent une 
+        * particule appartenant à une cellule donnée. Les forces
+        * peuvent être dues au potentiel de Lennard-Jones, à l'interaction
+        * gravitationnelle ou au potentiel gravitationnel.
         * @param[in] cellule est la cellule.
         * @param[in] particule est la particule.
         */
@@ -60,7 +64,8 @@ class Simulation{
         void calculerForceSurParticule(const Cellule& cellule, Particule* particule);
         
         /**
-        * @brief Fonction qui calcule l'énergie cinétique du système à un moment donné.
+        * @brief Fonction qui calcule l'énergie cinétique
+        * du système à un moment donné.
         */
 
         double calculerEnergieCinetique();
@@ -70,8 +75,10 @@ class Simulation{
         /* Constructeur */
 
         /**
-        * @brief Constructeur de la classe Simulation.
-        * @param univers est une référence à l'univers dans lequel la simulation sera réalisée.
+        * @brief 
+        * Constructeur de la classe Simulation.
+        * @param univers est une référence à l'univers dans 
+        * lequel la simulation sera réalisée.
         */
 
         Simulation(Univers& univers);
@@ -79,7 +86,8 @@ class Simulation{
         /* Méthodes publiques */
 
         /**
-        * @brief Fonction qui exécute l’algorithme Stromer verlet.
+        * @brief 
+        * Fonction qui exécute l’algorithme Stromer verlet.
         */
 
         void stromerVerlet();

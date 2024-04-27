@@ -99,7 +99,7 @@ bool Particule::operator<(const Particule& autre) const{
     return false;
 }
 
-/* Surcharge externe des operateurs */
+/* Surcharge d'opérateurs amis */
 
 std::ostream& operator<<(std::ostream& os, const Particule& particule){
     os << "Particule ID : " << particule.getId() << " "

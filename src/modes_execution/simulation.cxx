@@ -43,11 +43,8 @@ void Simulation::stromerVerlet(){
     sauvegarderEtatEnTexte(fichierTexte, univers, 0);
     sauvegarderEtatEnVTU(nomDossier, univers, 0);
 
-    //std::cout << univers.getNombreParticules() << "\n";
-    //exit(0);
-
     double t = 0;
-    for(int i = 0; t < tFinal; t = t + delta, i++){
+    for(int i = 1; t < tFinal; t = t + delta, i++){
 
         /* Mettre à jour les paramètres de position */
         for(const auto& cellule : univers.getGrille()){
@@ -69,8 +66,8 @@ void Simulation::stromerVerlet(){
             }
         }
 
-        /* mettre à jour la vitesse */
-        if(limiterVitesse && i != 0 && i % 1000 == 0){
+        /* Mettre à jour la vitesse */
+        if(limiterVitesse && i % 1000 == 0){
             double energieCinetique = calculerEnergieCinetique();
             //if(energieCinetique > energieDesiree){
                 double beta = std::sqrt(energieDesiree/energieCinetique);
@@ -187,7 +184,7 @@ void Simulation::calculerForceSurParticule(const Cellule& cellule, Particule* pa
 
                 /* Ajouter la force d’interaction gravitationnelle */
                 if(forceIG && distance < univers.getRCut() && distance != 0){
-                    double magnitude = particule->getMasse()*autreParticule->getMasse() / pow(distance, 3);
+                    double magnitude = 4*pow(M_PI,2)*particule->getMasse()*autreParticule->getMasse() / pow(distance, 3);
                     Vecteur<double> force = direction * magnitude;
                     autreParticule->setForce(autreParticule->getForce() - force);
                     particule->setForce(particule->getForce() + force);

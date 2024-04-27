@@ -6,6 +6,10 @@ Cellule::Cellule() : bord(false) {}
 
 /* Méthodes publiques */
 
+std::vector<Particule*>::const_iterator Cellule::suprimerParticule(std::vector<Particule*>::const_iterator it){
+    return particules.erase(it);
+}
+
 void Cellule::ajouterParticule(Particule* particule) {
     particules.push_back(particule);
 }
@@ -16,10 +20,6 @@ void Cellule::ajouterVoisine(Cellule* voisine){
 
 bool Cellule::comparerIndices(int autreX, int autreY, int autreZ) const{
     return indices.getX() == autreX && indices.getY() == autreY && indices.getZ() == autreZ;
-}
-
-std::vector<Particule*>::const_iterator Cellule::suprimerParticule(std::vector<Particule*>::const_iterator it){
-    return particules.erase(it);
 }
 
 /* Getters */

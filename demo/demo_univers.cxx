@@ -149,13 +149,13 @@ int main(int argc, char *argv[]){
         //lectureDuFichier(adresseFichier, univers);
     
         double xCircle = 0;
-        double yCircle = 0;
+        double yCircle = -10;
         double zCircle = 0;
-        double radius = 12;
+        double radius = 17;
         double changeAnglePrev = 0;
         int nombreParticulesPerCercle = 1;
 
-        double distance = pow(2, 1.0/6);
+        double distance = 1.5;
         for(double j = 1; j < radius; j = j+distance){
             nombreParticulesPerCercle += 6;
             double changeAngle = 2 * M_PI / nombreParticulesPerCercle;
@@ -182,6 +182,7 @@ int main(int argc, char *argv[]){
 
         /* Créer la simulation et démarrer l'algorithme de Stromer-Verlet */
         Simulation simulation(univers);
+        //std::cout << univers.getNombreParticules() << "\n";
         simulation.stromerVerlet();
     
         /* Mesurer le temps de fin de la simulation */
@@ -192,6 +193,8 @@ int main(int argc, char *argv[]){
 
     return 0;
 }
+
+
 
 
 /*  
@@ -216,10 +219,4 @@ int main(int argc, char *argv[]){
             univers.ajouterParticule(particuleRectangle);
         }
     }
-*/
-
-
-/*
-    Particule soleil("etoile", 21.333333,20,0, 0,3.162,0, 1);
-    Particule terre("planete", 19.333333,20,0, 0,-1.581,0, 1);
 */

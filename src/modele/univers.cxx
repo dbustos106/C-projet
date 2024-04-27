@@ -21,6 +21,12 @@ Univers::Univers() : nombreParticules(0){
     double ldZ = configuration.getLdZ();
     ld = Vecteur<double>(ldX, ldY, ldZ);
 
+    /* Vérifier les longueurs de l'univers */
+    if(ldX == 0 && ldY == 0 && ldZ == 0){
+        std::cerr << "Erreur : Les dimensions de l'univers sont (0, 0, 0).\n";
+        exit(0);
+    }
+
     /* Récupérer la condition limite */
     conditionLimite = configuration.getConditionLimite();
 
@@ -35,12 +41,6 @@ Univers::Univers() : nombreParticules(0){
         exit(0);
     }
     
-    /* Vérifier les dimensions de l'univers */
-    if(ldX == 0 && ldY == 0 && ldZ == 0){
-        std::cerr << "Erreur : Les dimensions de l'univers sont (0, 0, 0).\n";
-        exit(0);
-    }
-
     /* Redimensionner la liste de cellules */
     grille.resize(nc.getX() * nc.getY() * nc.getZ());
 
@@ -126,10 +126,12 @@ void Univers::ajouterParticulesAleatoires(int n){
     std::random_device rd;
     std::mt19937 mt(rd());
 
+    /* Définir des distributions uniformes pour les coordonnées X, Y et Z */
     std::uniform_real_distribution<double> distX(-ld.getX()/2, ld.getX()/2);
     std::uniform_real_distribution<double> distY(-ld.getY()/2, ld.getY()/2);
     std::uniform_real_distribution<double> distZ(-ld.getZ()/2, ld.getZ()/2);
 
+    /* Ajouter les particules aléatoires */
     for(int i = 0; i < n; i++){
         Particule particule(distX(mt), distY(mt), distZ(mt));
         ajouterParticule(particule);
@@ -140,12 +142,12 @@ Vecteur<double> Univers::calculerVecteurDirection(Particule* particule1, Particu
     const Vecteur<double>& pos1 = particule1->getPosition();
     const Vecteur<double>& pos2 = particule2->getPosition();
 
+    /* Calculer la différence entre les positions */
     double dx = pos2.getX() - pos1.getX();
     double dy = pos2.getY() - pos1.getY();
     double dz = pos2.getZ() - pos1.getZ();
 
-    /* Corriger la direction s'il y 
-    a une périodicité aux limites */
+    /* Corriger en cas de périodicité aux limites */
     if(conditionLimite == ConditionLimite::Periodique){
         if(std::abs(dx) > ld.getX() / 2){
             dx -= std::copysign(ld.getX(), dx);
@@ -166,7 +168,7 @@ void Univers::deplacerParticule(Particule* particule, const Vecteur<double>& vec
     /* Déplacer la particule */
     particule->deplacer(vec);
 
-    /* Corriger la position s'il y a périodicité */
+    /* Corriger la position en cas de périodicité */
     if(conditionLimite == ConditionLimite::Periodique){
         const Vecteur<double> &position = particule->getPosition();
 
@@ -221,16 +223,15 @@ void Univers::corrigerCellules(){
     for(auto& cellule : grille){
         auto& particulesCellule = cellule.getParticules();
         for(auto it = particulesCellule.begin(); it != particulesCellule.end();){
-            Particule &particule = *(*it);
 
             /* Vérifier si sa cellule a déjà été confirmée */
-            if(particule.isCelluleConfirmee()){
+            if((*it)->isCelluleConfirmee()){
                 it++;
                 continue;
             }
 
             /* Calculer les indices auxquels appartient la cellule */
-            const Vecteur<double>& position = particule.getPosition();
+            const Vecteur<double>& position = (*it)->getPosition();
             int x = floor(position.getX() / rCut);
             int y = floor(position.getY() / rCut);
             int z = floor(position.getZ() / rCut);
@@ -244,8 +245,8 @@ void Univers::corrigerCellules(){
             /* Ajouter la particule à la cellule correspondante */
             if(x >= 0 && x < nc.getX() && y >= 0 && y < nc.getY() && z >= 0 && z < nc.getZ()){  
                 int indice = x*nc.getY()*nc.getZ() + y * nc.getZ() + z;
-                grille[indice].ajouterParticule(&particule);
-                particule.setCelluleConfirmee(true);
+                grille[indice].ajouterParticule(*it);
+                (*it)->setCelluleConfirmee(true);
             }else{
                 nombreParticules--;
             }
@@ -267,10 +268,6 @@ const std::vector<Cellule>& Univers::getGrille() const{
     return grille;
 }
 
-const Vecteur<double>& Univers::getLd() const{
-    return ld;
-}
-
 ConditionLimite Univers::getConditionLimite() const{
     return conditionLimite;
 }
@@ -285,4 +282,8 @@ double Univers::getRCutReflexion() const{
 
 double Univers::getRCut() const{
     return rCut;
+}
+
+const Vecteur<double>& Univers::getLd() const{
+    return ld;
 }

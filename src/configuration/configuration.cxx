@@ -284,10 +284,24 @@ void Configuration::setLd(double newLdX, double newLdY, double newLdZ){
     ldZ = newLdZ;
 }
 
-void Configuration::setRCut(double newRCut){
-    rCut = newRCut;
+void Configuration::setForces(bool newForceLJ, bool newForceIG, bool newForcePG){
+    forceLJ = newForceLJ;
+    forceIG = newForceIG;
+    forcePG = newForcePG;
 }
 
 void Configuration::setConditionLimite(ConditionLimite newConditionLimite){
     conditionLimite = newConditionLimite;
+}
+
+void Configuration::setRCut(double newRCut){
+    rCut = newRCut;
+}
+
+void Configuration::setDelta(double newDelta){
+    delta = newDelta;
+}
+
+void Configuration::setTFinal(double newTFinal){
+    tFinal = newTFinal;
 }
