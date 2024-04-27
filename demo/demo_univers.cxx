@@ -133,36 +133,7 @@ int main(int argc, char *argv[]){
 
     /* Exécute le mode de mesure des performances */
     if(option == 2){
-        //mesurerPerformance();
-
-        /* Établir la configuration de l'univers */
-        Configuration& configuration = Configuration::getInstance();
-        configuration.setConditionLimite(ConditionLimite::Absorption);
-        configuration.setForces(false, false, true);
-        configuration.setNomDossier("test");
-        configuration.setLd(2, 20, 0);
-        configuration.setDelta(0.005);
-        configuration.setTFinal(1);
-        configuration.setRCut(2);
-
-        Univers univers;
-
-        Particule particule("A", 0,9,0, 0,0,0, 1);
-        univers.ajouterParticule(particule);
-
-        Simulation simulation(univers);
-        std::cout << univers.getNombreParticules() << "\n";
-        simulation.stromerVerlet();
-
-        const Cellule& cellule = univers.getCelluleParIndices(0,6,0);
-        std::cout << cellule.getParticules().size() << "\n";
-        Particule* particulePtr = cellule.getParticules().front();
-
-        Vecteur<double> ldM = -univers.getLd() / 2;
-        univers.deplacerParticule(particulePtr, ldM);
-
-        std::cout << particulePtr->getPosition().getY() << "\n";
-        std::cout << particulePtr->getPosition() << "\n";
+        mesurerPerformance();
 
     /* Exécute le mode de simulation de particules */
     }else{
