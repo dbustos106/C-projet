@@ -11,8 +11,7 @@ Univers::Univers() : nombreParticules(0){
     rCutReflexion = configuration.getRCutReflexion();
     rCut = configuration.getRCut();
     if(rCut < rCutReflexion){
-        std::cerr << "Erreur : Rayon de coupure inférieur au rayon de réflexion\n";
-        exit(0);
+        throw std::invalid_argument("Rayon de coupure inférieur au rayon de réflexion");
     }
 
     /* Créer un vecteur de longueurs caractéristiques */
@@ -23,8 +22,7 @@ Univers::Univers() : nombreParticules(0){
 
     /* Vérifier les longueurs de l'univers */
     if(ldX == 0 && ldY == 0 && ldZ == 0){
-        std::cerr << "Erreur : Les dimensions de l'univers sont (0, 0, 0).\n";
-        exit(0);
+        throw std::invalid_argument("Les dimensions de l'univers sont (0, 0, 0)");
     }
 
     /* Récupérer la condition limite */
@@ -37,8 +35,7 @@ Univers::Univers() : nombreParticules(0){
 
     /* Vérifier les nombres de cellules */
     if(nc.getX() <= 0 || nc.getY() <= 0 || nc.getZ() <= 0){
-        std::cerr << "Erreur : Une des longueurs caractéristiques est inférieure à rCut.";
-        exit(0);
+        throw std::invalid_argument("Une des longueurs caractéristiques est inférieure à rCut");
     }
     
     /* Redimensionner la liste de cellules */

@@ -16,8 +16,7 @@ void lectureDuFichier(const std::string& adresseFichier, Univers& univers){
             size_t quote_start = line.find("\""); 
             size_t quote_end = line.find("\"", quote_start + 1); 
             if(quote_start == std::string::npos || quote_end == std::string::npos){
-                std::cerr << "Erreur dans la lecture du nombre de particules\n";
-                exit(0);
+                throw std::invalid_argument("Nombre de points mal définis");
             }
     
             std::string substr = line.substr(quote_start + 1, quote_end - quote_start - 1);
@@ -28,24 +27,21 @@ void lectureDuFichier(const std::string& adresseFichier, Univers& univers){
 
     /* Vérifier la lecture du nombre de particules */
     if(nombreParticules == static_cast<unsigned long>(-1)){
-        std::cerr << "Erreur : nombre de points non défini\n";
-        exit(0);
+        throw std::invalid_argument("Nombre de points non défini");
     }
 
     /* Lire les positions et insérer les particules dans le vecteur */
     while(std::getline(fichier, line)){
         if(line.find("\"Position\"") != std::string::npos){
             if(!std::getline(fichier, line)){
-                std::cerr << "Erreur de lecture de la ligne des positions\n";
-                exit(0);
+                throw std::invalid_argument("Erreur de lecture de la ligne des positions");
             } 
             std::stringstream stream(line);
             
             double x, y, z;
             for(unsigned long i = 0; i < nombreParticules; i++){
                 if(!(stream >> x >> y >> z)){
-                    std::cerr << "Erreur dans la lecture des positions\n";
-                    exit(0);
+                    throw std::invalid_argument("Erreur dans la lecture des positions");
                 }
                 Particule particule(x, y, z);
                 particules.push_back(particule);
@@ -56,24 +52,21 @@ void lectureDuFichier(const std::string& adresseFichier, Univers& univers){
 
     /* Vérifier que la taille du vecteur corresponde au nombre de particules */
     if(nombreParticules != particules.size()){
-        std::cerr << "Erreur : nombre de points ne correspond pas au nombre de positions";
-        exit(0);
+        throw std::invalid_argument("Nombre de points ne correspond pas au nombre de positions");
     }
 
     /* Lire les vitesses des particules */
     while(std::getline(fichier, line)){
         if(line.find("\"Velocity\"") != std::string::npos){
             if(!std::getline(fichier, line)){
-                std::cerr << "Erreur de lecture de la ligne des vitesses\n";
-                exit(0);
+                throw std::invalid_argument("Erreur de lecture de la ligne des vitesses");
             } 
             std::stringstream stream(line);
         
             for(unsigned long i = 0; i < nombreParticules; i++){
                 double vx, vy, vz;
                 if(!(stream >> vx >> vy >> vz)){
-                    std::cerr << "Erreur dans la lecture des vitesses\n";
-                    exit(0);
+                    throw std::invalid_argument("Erreur dans la lecture des vitesses");
                 }
         
                 particules[i].setVitesse(Vecteur<double>(vx, vy, vz));
@@ -86,16 +79,14 @@ void lectureDuFichier(const std::string& adresseFichier, Univers& univers){
     while(std::getline(fichier, line)){
         if(line.find("\"Masse\"") != std::string::npos){
             if(!std::getline(fichier, line)){
-                std::cerr << "Erreur de lecture de la ligne des masses\n";
-                exit(0);
+                throw std::invalid_argument("Erreur de lecture de la ligne des masses");
             } 
             std::stringstream stream(line);
         
             for(unsigned long i = 0; i < nombreParticules; i++){
                 double masse;
                 if(!(stream >> masse)){
-                    std::cerr << "Erreur dans la lecture des masses\n";
-                    exit(0);
+                    throw std::invalid_argument("Erreur dans la lecture des masses");
                 }
                 particules[i].setMasse(masse);
             }

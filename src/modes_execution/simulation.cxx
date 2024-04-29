@@ -50,7 +50,6 @@ void Simulation::stromerVerlet(){
         /* Mettre à jour les paramètres de position */
         for(const auto& cellule : univers.getGrille()){
             for(auto particule : cellule.getParticules()){
-                std::cout << *particule << "\n";
                 univers.deplacerParticule(particule, particule->getVitesse()*delta + (0.5/particule->getMasse())*particule->getForce()*pow(delta, 2));
                 particule->setFold(particule->getForce());
                 particule->setCelluleConfirmee(false);
@@ -71,14 +70,14 @@ void Simulation::stromerVerlet(){
         /* Mettre à jour la vitesse */
         if(limiterVitesse && i % 1000 == 0){
             double energieCinetique = calculerEnergieCinetique();
-            //if(energieCinetique > energieDesiree){
+            if(energieCinetique > energieDesiree){
                 double beta = std::sqrt(energieDesiree/energieCinetique);
                 for(const auto& cellule : univers.getGrille()){
                     for(auto particule : cellule.getParticules()){
                         particule->setVitesse(particule->getVitesse() * beta);
                     }
                 }
-            //}
+            }
         }
 
     }

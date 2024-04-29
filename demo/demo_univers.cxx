@@ -138,64 +138,71 @@ int main(int argc, char *argv[]){
     /* Exécute le mode de simulation de particules */
     }else{
 
-        Configuration& configuration = Configuration::getInstance();
+        try{
 
-        /* Afficher les paramètres et demander confirmation */
-        configuration.afficherParametresPossibles();
+            Configuration& configuration = Configuration::getInstance();
 
-        /* Lire le fichier de configuration et afficher les les paramètres choisis */
-        configuration.lireFichierConfiguration();
-        configuration.afficherParametresChoisis();
+            /* Afficher les paramètres et demander confirmation */
+            configuration.afficherParametresPossibles();
 
-        /* Mesurer le temps de début de la simulation */
-        auto start = std::chrono::steady_clock::now();
+            /* Lire le fichier de configuration et afficher les les paramètres choisis */
+            configuration.lireFichierConfiguration();
+            configuration.afficherParametresChoisis();
 
-        /* Créer un univers et lire le fichier .vtu d'entrée */
-        Univers univers;
-        const std::string& adresseFichier = configuration.getAdresseFichier();
-        //lectureDuFichier(adresseFichier, univers);
+            /* Mesurer le temps de début de la simulation */
+            auto start = std::chrono::steady_clock::now();
+
+            /* Créer un univers et lire le fichier .vtu d'entrée */
+            Univers univers;
+            const std::string& adresseFichier = configuration.getAdresseFichier();
+            //lectureDuFichier(adresseFichier, univers);
     
-        double xCircle = 0;
-        double yCircle = -10;
-        double zCircle = 0;
-        double radius = 17;
-        double changeAnglePrev = 0;
-        int nombreParticulesPerCercle = 1;
+            double xCircle = 0;
+            double yCircle = -10;
+            double zCircle = 0;
+            double radius = 13;
+            double changeAnglePrev = 0;
+            int nombreParticulesPerCercle = 1;
 
-        double distance = 1.5;
-        for(double j = 1; j < radius; j = j+distance){
-            nombreParticulesPerCercle += 6;
-            double changeAngle = 2 * M_PI / nombreParticulesPerCercle;
-            for(int i = 0; i < nombreParticulesPerCercle; i++){
-                double xPoint = xCircle + j * cos(changeAngle*i + changeAnglePrev);
-                double yPoint = yCircle + j * sin(changeAngle*i + changeAnglePrev);
-                Particule particle("circle", xPoint, yPoint, zCircle, 0,-10,0, 1);
-                univers.ajouterParticule(particle);
+            double distance = 1.2;
+            for(double j = 1; j < radius; j = j+distance){
+                nombreParticulesPerCercle += 6;
+                double changeAngle = 2 * M_PI / nombreParticulesPerCercle;
+                for(int i = 0; i < nombreParticulesPerCercle; i++){
+                    double xPoint = xCircle + j * cos(changeAngle*i + changeAnglePrev);
+                    double yPoint = yCircle + j * sin(changeAngle*i + changeAnglePrev);
+                    Particule particle("circle", xPoint, yPoint, zCircle, 0,-10,0, 7);
+                    univers.ajouterParticule(particle);
+                }
+                changeAnglePrev = changeAngle;
             }
-            changeAnglePrev = changeAngle;
-        }
 
-        double xRectangle = -125;
-        double yRectangle = -90;
-        double zRectangle = 0;
+            double xRectangle = -125;
+            double yRectangle = -90;
+            double zRectangle = 0;
 
-        distance = 0.8;
-        for(int i = 0; i < 312; i++){
-            for(int j = 0; j < 55; j++){
-                Particule particuleRectangle("rectangle", xRectangle + i*distance, yRectangle + j*distance, zRectangle, 0,0,0, 1);
-                univers.ajouterParticule(particuleRectangle);
+            distance = 0.8;
+            for(int i = 0; i < 312; i++){
+                for(int j = 0; j < 55; j++){
+                    Particule particuleRectangle("rectangle", xRectangle + i*distance, yRectangle + j*distance, zRectangle, 0,0,0, 1);
+                    univers.ajouterParticule(particuleRectangle);
+                }
             }
-        }
 
-        /* Créer la simulation et démarrer l'algorithme de Stromer-Verlet */
-        Simulation simulation(univers);
-        //std::cout << univers.getNombreParticules() << "\n";
-        simulation.stromerVerlet();
+            /* Créer la simulation et démarrer l'algorithme de Stromer-Verlet */
+            Simulation simulation(univers);
+            std::cout << univers.getNombreParticules() << "\n";
+            //exit(0);
+            simulation.stromerVerlet();
     
-        /* Mesurer le temps de fin de la simulation */
-        auto end = std::chrono::steady_clock::now();
-        std::chrono::duration<double> elapsed_seconds = end-start;
-        std::cout << "Temps de simulation: " << elapsed_seconds.count() << " secondes\n";
+            /* Mesurer le temps de fin de la simulation */
+            auto end = std::chrono::steady_clock::now();
+            std::chrono::duration<double> elapsed_seconds = end-start;
+            std::cout << "Temps de simulation: " << elapsed_seconds.count() << " secondes\n";
+
+        }catch(const std::exception& e){
+            std::cerr << "Erreur : " << e.what() << std::endl;
+        }
     }
 
     return 0;

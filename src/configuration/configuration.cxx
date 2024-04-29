@@ -31,8 +31,7 @@ void Configuration::lireFichierConfiguration(){
         std::string key, value;
         std::istringstream iss(line);
         if(!std::getline(iss, key, '=')){
-            std::cerr << "Erreur de format dans le fichier de configuration. \n";
-            exit(0);
+            throw std::invalid_argument("Format de fichier de configuration incorrect");
         }
             
         /* Continuer si value est vide */
@@ -92,12 +91,10 @@ void Configuration::lireFichierConfiguration(){
             }else if(value == "Periodique"){
                 conditionLimite = ConditionLimite::Periodique;
             }else{
-                std::cerr << "Erreur : Valeur de condition limite non valide: " << value << "\n";
-                exit(0);
+                throw std::invalid_argument("Valeur de condition limite non valide: " + value);
             }
         }else{
-            std::cerr << "Erreur : Option inconnue '" << key << "'\n";
-            exit(0);
+            throw std::invalid_argument("Option inconnue '" + key + "'");
         }
     }
 
@@ -106,15 +103,13 @@ void Configuration::lireFichierConfiguration(){
 
     /* Si l'adresse du fichier d'entrée n'est pas fournie, demandez-la */
     if(adresseFichier.empty()){
-        std::cout << "Erreur : Le fichier d'entrée n'a pas été saisi\n"; 
-        exit(0);
+        throw std::invalid_argument("Le fichier d'entrée n'a pas été saisi"); 
     }
 
     /* Vérifier le format du fichier d'entrée */
     size_t positionExtension = adresseFichier.find_last_of(".");
     if(positionExtension == std::string::npos || adresseFichier.substr(positionExtension) != ".vtu"){
-        std::cerr << "Erreur : Extension de fichier différente de .vtu\n";
-        exit(0);
+        throw std::invalid_argument("Extension de fichier différente de .vtu");
     }
 
     /* Prendre le nom du fichier d'entrée comme nom pour le dossier de sortie */
