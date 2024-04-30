@@ -155,44 +155,10 @@ int main(int argc, char *argv[]){
             /* Créer un univers et lire le fichier .vtu d'entrée */
             Univers univers;
             const std::string& adresseFichier = configuration.getAdresseFichier();
-            //lectureDuFichier(adresseFichier, univers);
+            lectureDuFichier(adresseFichier, univers);
     
-            double xCircle = 0;
-            double yCircle = -10;
-            double zCircle = 0;
-            double radius = 13;
-            double changeAnglePrev = 0;
-            int nombreParticulesPerCercle = 1;
-
-            double distance = 1.2;
-            for(double j = 1; j < radius; j = j+distance){
-                nombreParticulesPerCercle += 6;
-                double changeAngle = 2 * M_PI / nombreParticulesPerCercle;
-                for(int i = 0; i < nombreParticulesPerCercle; i++){
-                    double xPoint = xCircle + j * cos(changeAngle*i + changeAnglePrev);
-                    double yPoint = yCircle + j * sin(changeAngle*i + changeAnglePrev);
-                    Particule particle("circle", xPoint, yPoint, zCircle, 0,-10,0, 7);
-                    univers.ajouterParticule(particle);
-                }
-                changeAnglePrev = changeAngle;
-            }
-
-            double xRectangle = -125;
-            double yRectangle = -90;
-            double zRectangle = 0;
-
-            distance = 0.8;
-            for(int i = 0; i < 312; i++){
-                for(int j = 0; j < 55; j++){
-                    Particule particuleRectangle("rectangle", xRectangle + i*distance, yRectangle + j*distance, zRectangle, 0,0,0, 1);
-                    univers.ajouterParticule(particuleRectangle);
-                }
-            }
-
             /* Créer la simulation et démarrer l'algorithme de Stromer-Verlet */
             Simulation simulation(univers);
-            std::cout << univers.getNombreParticules() << "\n";
-            //exit(0);
             simulation.stromerVerlet();
     
             /* Mesurer le temps de fin de la simulation */
@@ -209,28 +175,58 @@ int main(int argc, char *argv[]){
 }
 
 
-
-
 /*  
-    double distance = pow(2, 1.0/6);
+double distance = pow(2, 1.0/6);
 
-    double xCarre = -pow(2, 1.0/6)*20;
-    double yCarre = 8;
-    double zCarre = 0;
-    for(int i = 0; i < 40; i++){
-        for(int j = 0; j < 40; j++){
-            Particule particuleCarre("carre", xCarre + i*distance, yCarre + j*distance, zCarre, 0,-10,0, 1);
-            univers.ajouterParticule(particuleCarre);
-        }
+double xCarre = -pow(2, 1.0/6)*20;
+double yCarre = 8;
+double zCarre = 0;
+for(int i = 0; i < 40; i++){
+    for(int j = 0; j < 40; j++){
+        Particule particuleCarre("carre", xCarre + i*distance, yCarre + j*distance, zCarre, 0,-10,0, 1);
+        univers.ajouterParticule(particuleCarre);
     }
+}
 
-    double xRectangle = -pow(2, 1.0/6)*80;
-    double yRectangle = -pow(2, 1.0/6)*40 + 4;
-    double zRectangle = 0;
-    for(int i = 0; i < 160; i++){
-        for(int j = 0; j < 40; j++){
-            Particule particuleRectangle("rectangle", xRectangle + i*distance, yRectangle + j*distance, zRectangle, 0,0,0, 1);
-            univers.ajouterParticule(particuleRectangle);
-        }
+double xRectangle = -pow(2, 1.0/6)*80;
+double yRectangle = -pow(2, 1.0/6)*40 + 4;
+double zRectangle = 0;
+for(int i = 0; i < 160; i++){
+    for(int j = 0; j < 40; j++){
+        Particule particuleRectangle("rectangle", xRectangle + i*distance, yRectangle + j*distance, zRectangle, 0,0,0, 1);
+        univers.ajouterParticule(particuleRectangle);
     }
-*/
+}*/
+
+/*
+double xCircle = 0;
+double yCircle = 20;
+double zCircle = 0;
+double radius = 13;
+double changeAnglePrev = 0;
+int nombreParticulesPerCercle = 1;
+
+double distance = 1.2;
+for(double j = 1; j < radius; j = j+distance){
+    nombreParticulesPerCercle += 6;
+    double changeAngle = 2 * M_PI / nombreParticulesPerCercle;
+    for(int i = 0; i < nombreParticulesPerCercle; i++){
+        double xPoint = xCircle + j * cos(changeAngle*i + changeAnglePrev);
+        double yPoint = yCircle + j * sin(changeAngle*i + changeAnglePrev);
+        Particule particle("circle", xPoint, yPoint, zCircle, 0,-10,0, 10);
+        univers.ajouterParticule(particle);
+    }
+    changeAnglePrev = changeAngle;
+}
+
+double xRectangle = -125;
+double yRectangle = -90;
+double zRectangle = 0;
+
+distance = 0.8;
+for(int i = 0; i < 312; i++){
+    for(int j = 0; j < 55; j++){
+        Particule particuleRectangle("rectangle", xRectangle + i*distance, yRectangle + j*distance, zRectangle, 0,0,0, 1);
+        univers.ajouterParticule(particuleRectangle);
+    }
+}*/
