@@ -3,7 +3,7 @@
 void sauvegarderEtatEnTexte(std::ofstream& fichierTexte, const Univers& univers, int i){
     fichierTexte << "Iteration " << std::to_string(i) << " : ";
     for(const auto& cellule : univers.getGrille()){
-        for(auto particule : cellule.getParticules()){
+        for(const auto particule : cellule.getParticules()){
             fichierTexte << *particule << " ";
         }
     }
@@ -23,7 +23,7 @@ void sauvegarderEtatEnVTU(const std::string& nomDossier, const Univers& univers,
 
     /* Sauvegarder les positions */
     for(const auto& cellule : univers.getGrille()){
-        for(auto particule : cellule.getParticules()){
+        for(const auto particule : cellule.getParticules()){
             const Vecteur<double>& position = particule->getPosition();
             fichierVTU << position.getX() - ld.getX()/2 << " ";
             fichierVTU << position.getY() - ld.getY()/2 << " ";
@@ -40,7 +40,7 @@ void sauvegarderEtatEnVTU(const std::string& nomDossier, const Univers& univers,
 
     /* Sauvegarder les vitesses */
     for(const auto& cellule : univers.getGrille()){
-        for(auto particule : cellule.getParticules()){
+        for(const auto particule : cellule.getParticules()){
             const Vecteur<double>& vitesse = particule->getVitesse();
             fichierVTU << vitesse.getX() << " ";
             fichierVTU << vitesse.getY() << " ";
@@ -55,7 +55,7 @@ void sauvegarderEtatEnVTU(const std::string& nomDossier, const Univers& univers,
 
     /* Sauvegarder les masses */
     for(const auto& cellule : univers.getGrille()){
-        for(auto particule : cellule.getParticules()){
+        for(const auto particule : cellule.getParticules()){
             fichierVTU << particule->getMasse() << " ";
         }
     }

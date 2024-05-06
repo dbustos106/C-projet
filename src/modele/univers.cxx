@@ -218,7 +218,7 @@ void Univers::remplirCellules(){
 
 void Univers::corrigerCellules(){
     for(auto& cellule : grille){
-        auto& particulesCellule = cellule.getParticules();
+        const auto& particulesCellule = cellule.getParticules();
         for(auto it = particulesCellule.begin(); it != particulesCellule.end();){
 
             /* Vérifier si sa cellule a déjà été confirmée */

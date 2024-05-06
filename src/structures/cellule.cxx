@@ -6,7 +6,7 @@ Cellule::Cellule() : bord(false) {}
 
 /* Méthodes publiques */
 
-std::vector<Particule*>::const_iterator Cellule::suprimerParticule(std::vector<Particule*>::const_iterator it){
+std::list<Particule*>::const_iterator Cellule::suprimerParticule(std::list<Particule*>::const_iterator it){
     return particules.erase(it);
 }
 
@@ -24,7 +24,7 @@ bool Cellule::comparerIndices(int autreX, int autreY, int autreZ) const{
 
 /* Getters */
 
-const std::vector<Particule*>& Cellule::getParticules() const{
+const std::list<Particule*>& Cellule::getParticules() const{
     return particules;
 }
 

@@ -12,7 +12,7 @@ class Cellule{
 
     private:
 
-        std::vector<Particule*> particules; /**< Vecteur de pointeurs vers les particules contenues dans la cellule. */
+        std::list<Particule*> particules; /**< List de pointeurs vers les particules contenues dans la cellule. */
         std::vector<Cellule*> voisines; /**< Vecteur de pointeurs vers les cellules voisines. */
 
         Vecteur<int> indices; /**< Indices identifiant la position de la cellule dans l'univers. */
@@ -39,7 +39,7 @@ class Cellule{
         * @return L'itérateur suivant après l'élément supprimé.
         */
 
-        std::vector<Particule*>::const_iterator suprimerParticule(std::vector<Particule*>::const_iterator it);
+        std::list<Particule*>::const_iterator suprimerParticule(std::list<Particule*>::const_iterator it);
 
         /**
         * @brief 
@@ -76,7 +76,7 @@ class Cellule{
         * @return Vecteur de pointeurs vers les particules contenues.
         */
 
-        const std::vector<Particule*>& getParticules() const;
+        const std::list<Particule*>& getParticules() const;
         
         /**
         * @brief 

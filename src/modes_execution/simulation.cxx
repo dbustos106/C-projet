@@ -49,7 +49,7 @@ void Simulation::stromerVerlet(){
 
         /* Mettre à jour les paramètres de position */
         for(const auto& cellule : univers.getGrille()){
-            for(auto particule : cellule.getParticules()){
+            for(const auto particule : cellule.getParticules()){
                 univers.deplacerParticule(particule, particule->getVitesse()*delta + (0.5/particule->getMasse())*particule->getForce()*pow(delta, 2));
                 particule->setFold(particule->getForce());
                 particule->setCelluleConfirmee(false);
@@ -62,7 +62,7 @@ void Simulation::stromerVerlet(){
         
         /* Mettre à jour les paramètres de vitesse */
         for(const auto& cellule : univers.getGrille()){
-            for(auto particule : cellule.getParticules()){
+            for(const auto particule : cellule.getParticules()){
                 particule->accelerer(delta*(0.5/particule->getMasse())*(particule->getForce() + particule->getFold()));
             }
         }
@@ -73,7 +73,7 @@ void Simulation::stromerVerlet(){
             if(energieCinetique > energieDesiree){
                 double beta = std::sqrt(energieDesiree/energieCinetique);
                 for(const auto& cellule : univers.getGrille()){
-                    for(auto particule : cellule.getParticules()){
+                    for(const auto particule : cellule.getParticules()){
                         particule->setVitesse(particule->getVitesse() * beta);
                     }
                 }
@@ -91,7 +91,7 @@ void Simulation::calculerForcesDuSysteme(){
     if(univers.getConditionLimite() == ConditionLimite::Reflexion){
         for(const auto& cellule : univers.getGrille()){
             if(cellule.isBord()){
-                for(auto particule : cellule.getParticules()){
+                for(const auto particule : cellule.getParticules()){
                     calculerForceReflexive(particule);
                 }
             }
@@ -100,7 +100,7 @@ void Simulation::calculerForcesDuSysteme(){
 
     /* Calculer les forces pour chaque particule */
     for(const auto& cellule : univers.getGrille()){
-        for(auto particule : cellule.getParticules()){
+        for(const auto particule : cellule.getParticules()){
             calculerForceSurParticule(cellule, particule);
         }
     }
@@ -160,8 +160,8 @@ void Simulation::calculerForceSurParticule(const Cellule& cellule, Particule* pa
     /* Calculer les forces d'interaction entre particules */
     double aux1 = 24*epsilon;
     double aux2 = 4*pow(M_PI,2);
-    for(auto voisine : cellule.getVoisines()){
-        for(auto autreParticule : voisine->getParticules()){
+    for(const auto voisine : cellule.getVoisines()){
+        for(const auto autreParticule : voisine->getParticules()){
 
             if(particule->getId() > autreParticule->getId()){
 
@@ -193,8 +193,8 @@ void Simulation::calculerForceSurParticule(const Cellule& cellule, Particule* pa
 
 double Simulation::calculerEnergieCinetique(){
     double energieCinetique = 0;
-    for(auto& cellule : univers.getGrille()){
-        for(auto particule : cellule.getParticules()){
+    for(const auto& cellule : univers.getGrille()){
+        for(const auto particule : cellule.getParticules()){
             energieCinetique += particule->getMasse()*particule->getVitesse().normeCarre();
         }
     }

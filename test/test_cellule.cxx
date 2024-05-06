@@ -23,7 +23,7 @@ TEST(CelluleTest, testGettersAndSetters){
     ASSERT_EQ(*cellule.getParticules().begin(), &particule);
 
     /* Supprimer la particule et vérifier */
-    std::vector<Particule*>::const_iterator it = cellule.getParticules().begin(); 
+    std::list<Particule*>::const_iterator it = cellule.getParticules().begin(); 
     cellule.suprimerParticule(it);
     ASSERT_EQ(cellule.getParticules().size(), 0);
 }
