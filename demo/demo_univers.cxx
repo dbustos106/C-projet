@@ -36,7 +36,7 @@
 * ## Fichier de configuration
 * 
 * Les différentes variables de configuration, avec lesquelles le programme peut être exécuté, 
-* doivent être spécifiées dans le fichier "configuracion" du dossier demo. Si l'une des variables \n
+* doivent être spécifiées dans le fichier "configuration.conf" du dossier demo. Si l'une des variables \n
 * est omise, le programme prendra la valeur par défaut spécifiée ci-dessous: \n
 *
 * - ADRESSE_FICHIER = Définit l'adresse du fichier vtu à partir duquel les particules d'entrée seront lues.

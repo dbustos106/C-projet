@@ -47,6 +47,6 @@ void mesurerPerformanceInsertionUnivers(int nombreParticules){
 
     auto end = std::chrono::steady_clock::now();
     std::chrono::duration<double> elapsed_seconds = end-start;
-    std::cout << "Creation d'un univers de " << nombreParticules 
+    std::cout << "Création d'un univers de " << nombreParticules 
               << " particules : " << elapsed_seconds.count() << " secondes\n";
 }
